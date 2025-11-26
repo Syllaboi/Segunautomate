@@ -1,0 +1,116 @@
+.experience-timeline {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.experience-timeline::before {
+    content: '';
+    position: absolute;
+    left: 30px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--gradient-primary);
+}
+
+.experience-item {
+    position: relative;
+    padding-left: 80px;
+    margin-bottom: var(--spacing-xl);
+}
+
+.experience-icon {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 60px;
+    height: 60px;
+    background: var(--gradient-primary);
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: var(--shadow-glow);
+    z-index: 1;
+}
+
+.experience-content {
+    padding: var(--spacing-lg);
+}
+
+.experience-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--spacing-md);
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.experience-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.experience-company {
+    font-size: 1.125rem;
+    color: var(--color-primary);
+    font-weight: 600;
+    margin: 0;
+}
+
+.experience-period {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.experience-responsibilities {
+    list-style: none;
+    padding: 0;
+}
+
+.experience-responsibilities li {
+    padding-left: 1.5rem;
+    margin-bottom: 0.75rem;
+    position: relative;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+}
+
+.experience-responsibilities li::before {
+    content: '▹';
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .experience-timeline::before {
+        left: 20px;
+    }
+
+    .experience-item {
+        padding-left: 60px;
+    }
+
+    .experience-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .experience-icon svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .experience-header {
+        flex-direction: column;
+    }
+}

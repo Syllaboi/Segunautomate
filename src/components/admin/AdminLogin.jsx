@@ -4,20 +4,21 @@ import { Lock } from 'lucide-react';
 import './AdminLogin.css';
 
 const AdminLogin = () => {
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const { login } = useAuth();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
         setError('');
 
-        const success = login(password);
+        const success = await login(email, password);
 
         if (!success) {
-            setError('Invalid password');
+            setError('Invalid email or password');
             setPassword('');
         }
         setIsLoading(false);
@@ -34,6 +35,22 @@ const AdminLogin = () => {
 
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
+                        <label htmlFor="email">Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            value={email}
+                            onChange={(e) => {
+                                setEmail(e.target.value);
+                                setError('');
+                            }}
+                            placeholder="admin@example.com"
+                            autoFocus
+                            disabled={isLoading}
+                        />
+                    </div>
+
+                    <div className="form-group">
                         <label htmlFor="password">Password</label>
                         <input
                             type="password"
@@ -43,8 +60,7 @@ const AdminLogin = () => {
                                 setPassword(e.target.value);
                                 setError('');
                             }}
-                            placeholder="Enter admin password"
-                            autoFocus
+                            placeholder="Enter password"
                             disabled={isLoading}
                         />
                     </div>

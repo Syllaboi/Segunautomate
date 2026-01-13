@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useProjects } from '../../context/ProjectsContext';
 import { X, Upload, Eye, Trash2 } from 'lucide-react';
+import { uploadToCloudinary } from '../../utils/cloudinary';
 import './ProjectForm.css';
 
 const ProjectForm = ({ project, onClose }) => {
@@ -10,8 +11,12 @@ const ProjectForm = ({ project, onClose }) => {
         description: '',
         images: [],
         link: '',
+        videoLink: '',
         tags: ''
     });
+    const [imageUrl, setImageUrl] = useState('');
+    const [isUploading, setIsUploading] = useState(false);
+    const [uploadError, setUploadError] = useState('');
 
     useEffect(() => {
         if (project) {
@@ -20,6 +25,7 @@ const ProjectForm = ({ project, onClose }) => {
                 description: project.description || '',
                 images: project.images || (project.image ? [project.image] : []),
                 link: project.link || '',
+                videoLink: project.videoLink || '',
                 tags: project.tags ? project.tags.join(', ') : ''
             });
         }
@@ -44,30 +50,40 @@ const ProjectForm = ({ project, onClose }) => {
         }
     };
 
-    const handleImageUpload = (e) => {
-        const file = e.target.files[0];
-        if (file && formData.images.length < 3) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                const base64String = reader.result;
-                setFormData(prev => ({
-                    ...prev,
-                    images: [...prev.images, base64String]
-                }));
-            };
-            reader.readAsDataURL(file);
-        } else if (formData.images.length >= 3) {
+    const handleImageUpload = async (e) => {
+        const files = Array.from(e.target.files || []);
+        if (files.length === 0) return;
+        if (formData.images.length >= 3) {
             alert('Maximum 3 images allowed per project');
+            return;
+        }
+        const spaceLeft = 3 - formData.images.length;
+        const toUpload = files.slice(0, spaceLeft);
+        setIsUploading(true);
+        setUploadError('');
+        try {
+            const uploaded = [];
+            for (const f of toUpload) {
+                const url = await uploadToCloudinary(f);
+                uploaded.push(url);
+            }
+            setFormData(prev => ({ ...prev, images: [...prev.images, ...uploaded] }));
+        } catch (err) {
+            console.error('Cloudinary upload failed:', err);
+            setUploadError(err?.message || 'Upload failed. Check your Cloudinary settings or try a different image.');
+        } finally {
+            setIsUploading(false);
+            e.target.value = '';
         }
     };
 
     const addImageUrl = () => {
-        const url = prompt('Enter image URL:');
-        if (url && formData.images.length < 3) {
+        if (imageUrl && formData.images.length < 3) {
             setFormData(prev => ({
                 ...prev,
-                images: [...prev.images, url]
+                images: [...prev.images, imageUrl]
             }));
+            setImageUrl('');
         } else if (formData.images.length >= 3) {
             alert('Maximum 3 images allowed per project');
         }
@@ -89,6 +105,7 @@ const ProjectForm = ({ project, onClose }) => {
             images: formData.images,
             image: formData.images[0] || '', // Keep backward compatibility
             link: formData.link,
+            videoLink: formData.videoLink,
             tags: formData.tags.split(',').map(tag => tag.trim()).filter(tag => tag)
         };
 
@@ -171,26 +188,64 @@ const ProjectForm = ({ project, onClose }) => {
 
                         {formData.images.length < 3 && (
                             <div className="image-upload-actions">
-                                <input
-                                    type="file"
-                                    id="image-upload"
-                                    accept="image/*"
-                                    onChange={handleImageUpload}
-                                    className="file-input"
-                                />
-                                <label htmlFor="image-upload" className="file-label btn btn-secondary">
-                                    <Upload size={18} />
-                                    Upload Image ({formData.images.length}/3)
-                                </label>
+                                {import.meta.env.VITE_CLOUDINARY_CLOUD_NAME && import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET ? (
+                                    <>
+                                        <input
+                                            type="file"
+                                            id="image-upload"
+                                            accept="image/*"
+                                            multiple
+                                            onChange={handleImageUpload}
+                                            className="file-input"
+                                            disabled={isUploading}
+                                        />
+                                        <label htmlFor="image-upload" className="file-label btn btn-secondary" aria-disabled={isUploading}>
+                                            <Upload size={18} />
+                                            {isUploading ? 'Uploading...' : `Upload Image (${formData.images.length}/3)`}
+                                        </label>
+                                        {uploadError && (
+                                            <small style={{ color: 'var(--color-error)', display: 'block', marginTop: '0.25rem' }}>
+                                                {uploadError}
+                                            </small>
+                                        )}
+                                        <small style={{ display: 'block', marginTop: '0.5rem' }}>
+                                            Or paste an image URL below
+                                        </small>
+                                    </>
+                                ) : (
+                                    <small style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--color-muted)' }}>
+                                        To enable direct uploads, set VITE_CLOUDINARY_CLOUD_NAME and VITE_CLOUDINARY_UPLOAD_PRESET in your .env
+                                    </small>
+                                )}
+                                <div className="editor-field-group" style={{ margin: '0.5rem 0' }}>
+                                    <input
+                                        type="url"
+                                        placeholder="Paste image URL..."
+                                        value={imageUrl}
+                                        onChange={(e) => setImageUrl(e.target.value)}
+                                    />
+                                </div>
                                 <button
                                     type="button"
                                     onClick={addImageUrl}
                                     className="btn btn-secondary"
                                 >
-                                    Add Image URL
+                                    Add Image URL ({formData.images.length}/3)
                                 </button>
                             </div>
                         )}
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="videoLink">Video Link (YouTube/Vimeo)</label>
+                        <input
+                            type="url"
+                            id="videoLink"
+                            name="videoLink"
+                            value={formData.videoLink}
+                            onChange={handleChange}
+                            placeholder="https://youtube.com/watch?v=..."
+                        />
                     </div>
 
                     <div className="form-group">

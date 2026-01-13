@@ -1,8 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { db } from '../firebase';
 import { collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy, serverTimestamp } from 'firebase/firestore';
-import { storage } from '../firebase';
-import { ref, uploadString, getDownloadURL } from 'firebase/storage';
 
 const ProjectsContext = createContext();
 
@@ -48,34 +46,16 @@ export const ProjectsProvider = ({ children }) => {
 
     const addProject = async (project) => {
         try {
-            // Create the project without images first
+            // URL-only mode: we only accept image URLs, not file uploads
             const { images = [], image, ...rest } = project;
+            const urls = images.filter(u => typeof u === 'string' && !u.startsWith('data:'));
+
             const docRef = await addDoc(collection(db, 'projects'), {
                 ...rest,
+                images: urls,
+                image: urls[0] || '',
                 createdAt: serverTimestamp()
             });
-
-            // Upload images to Storage and collect URLs
-            const urls = [];
-            for (let i = 0; i < images.length; i++) {
-                const img = images[i];
-                if (typeof img === 'string' && img.startsWith('data:')) {
-                    const storageRef = ref(storage, `projects/${docRef.id}/${i}.jpg`);
-                    await uploadString(storageRef, img, 'data_url');
-                    const url = await getDownloadURL(storageRef);
-                    urls.push(url);
-                } else if (typeof img === 'string') {
-                    // Assume it's a URL
-                    urls.push(img);
-                }
-            }
-
-            if (urls.length > 0) {
-                await updateDoc(doc(db, 'projects', docRef.id), {
-                    images: urls,
-                    image: urls[0]
-                });
-            }
 
             return { id: docRef.id, ...rest, images: urls, image: urls[0] };
         } catch (err) {
@@ -88,23 +68,11 @@ export const ProjectsProvider = ({ children }) => {
         try {
             const newData = { ...updates };
 
-            // Handle images if provided
             if (Array.isArray(updates.images)) {
-                const urls = [];
-                for (let i = 0; i < updates.images.length; i++) {
-                    const img = updates.images[i];
-                    if (typeof img === 'string' && img.startsWith('data:')) {
-                        const storageRef = ref(storage, `projects/${id}/${i}.jpg`);
-                        await uploadString(storageRef, img, 'data_url');
-                        const url = await getDownloadURL(storageRef);
-                        urls.push(url);
-                    } else if (typeof img === 'string') {
-                        urls.push(img);
-                    }
-                }
+                const urls = updates.images.filter(u => typeof u === 'string' && !u.startsWith('data:'));
                 newData.images = urls;
                 newData.image = urls[0] || '';
-                delete newData.createdAt; // don't accidentally override
+                delete newData.createdAt;
             }
 
             await updateDoc(doc(db, 'projects', id), newData);

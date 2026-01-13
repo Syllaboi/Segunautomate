@@ -1,4 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { auth } from '../firebase';
+import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 
 const AuthContext = createContext();
 
@@ -11,21 +13,9 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(() => {
-        const saved = sessionStorage.getItem('admin_authenticated');
-        const lastActivity = sessionStorage.getItem('admin_last_activity');
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-        // Check if session is valid and not expired (20 minutes = 1200000 ms)
-        if (saved === 'true' && lastActivity) {
-            const now = Date.now();
-            if (now - parseInt(lastActivity) < 20 * 60 * 1000) {
-                return true;
-            }
-        }
-        return false;
-    });
-
-    // Admin password
+    // Firebase Auth handles authentication
 
     // Update last activity timestamp
     const updateActivity = () => {
@@ -34,52 +24,32 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    // Check for inactivity every minute
+    // Subscribe to Firebase auth state
     useEffect(() => {
-        if (!isAuthenticated) return;
+        const unsub = onAuthStateChanged(auth, (user) => {
+            setIsAuthenticated(!!user);
+        });
+        return () => unsub();
+    }, []);
 
-        const checkInactivity = () => {
-            const lastActivity = sessionStorage.getItem('admin_last_activity');
-            if (lastActivity) {
-                const now = Date.now();
-                if (now - parseInt(lastActivity) > 20 * 60 * 1000) {
-                    logout();
-                }
-            }
-        };
-
-        const interval = setInterval(checkInactivity, 60000); // Check every minute
-
-        // Add event listeners for user activity
-        window.addEventListener('mousemove', updateActivity);
-        window.addEventListener('keydown', updateActivity);
-        window.addEventListener('click', updateActivity);
-
-        return () => {
-            clearInterval(interval);
-            window.removeEventListener('mousemove', updateActivity);
-            window.removeEventListener('keydown', updateActivity);
-            window.removeEventListener('click', updateActivity);
-        };
-    }, [isAuthenticated]);
-
-    const ADMIN_PASSWORD = 'Royalty.1608@070221';
-
-    const login = (password) => {
-        if (password === ADMIN_PASSWORD) {
-            setIsAuthenticated(true);
-            sessionStorage.setItem('admin_authenticated', 'true');
-            sessionStorage.setItem('admin_last_activity', Date.now().toString());
+    const login = async (email, password) => {
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
             return true;
+        } catch (e) {
+            console.error('Login failed', e);
+            return false;
         }
-        return false;
     };
 
-    const logout = () => {
-        setIsAuthenticated(false);
-        sessionStorage.removeItem('admin_authenticated');
-        sessionStorage.removeItem('admin_last_activity');
-        localStorage.removeItem('admin_authenticated');
+    const logout = async () => {
+        try {
+            await signOut(auth);
+        } catch (e) {
+            console.error('Sign out error', e);
+        } finally {
+            setIsAuthenticated(false);
+        }
     };
 
     return (

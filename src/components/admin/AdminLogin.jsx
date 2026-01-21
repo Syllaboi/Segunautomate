@@ -12,13 +12,19 @@ const AdminLogin = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (!email || !password) {
+            setError('Please enter both email and password');
+            return;
+        }
+
         setIsLoading(true);
         setError('');
 
-        const success = await login(email, password);
+        const result = await login(email, password);
 
-        if (!success) {
-            setError('Invalid email or password');
+        if (!result.success) {
+            setError(result.error || 'Invalid email or password');
             setPassword('');
         }
         setIsLoading(false);

@@ -34,11 +34,21 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (email, password) => {
         try {
+            console.log("Attempting login for:", email);
             await signInWithEmailAndPassword(auth, email, password);
-            return true;
+            console.log("Login successful");
+            return { success: true };
         } catch (e) {
-            console.error('Login failed', e);
-            return false;
+            console.error('Login failed error object:', e);
+            let errorMessage = "Login failed";
+            if (e.code === 'auth/invalid-credential') {
+                errorMessage = "Invalid email or password.";
+            } else if (e.code === 'auth/too-many-requests') {
+                errorMessage = "Too many failed attempts. Please try again later.";
+            } else if (e.message) {
+                errorMessage = e.message;
+            }
+            return { success: false, error: errorMessage };
         }
     };
 

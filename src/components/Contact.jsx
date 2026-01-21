@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import emailjs from '@emailjs/browser';
 import { useContent } from '../context/ContentContext';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import './Contact.css';
@@ -12,17 +13,54 @@ const Contact = () => {
         email: '',
         message: ''
     });
-    const [submitted, setSubmitted] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [status, setStatus] = useState({ type: '', message: '' });
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // In a real application, you would send this to a backend
-        console.log('Form submitted:', formData);
-        setSubmitted(true);
-        setTimeout(() => {
-            setSubmitted(false);
+        setIsLoading(true);
+        setStatus({ type: '', message: '' });
+
+        // Get these from your .env file
+        const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+        const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+        const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+        if (!serviceId || !templateId || !publicKey) {
+            setStatus({
+                type: 'error',
+                message: 'Email service is not configured. Please contact the administrator.'
+            });
+            setIsLoading(false);
+            return;
+        }
+
+        try {
+            await emailjs.sendForm(
+                serviceId,
+                templateId,
+                e.target,
+                publicKey
+            );
+
+            setStatus({ type: 'success', message: 'Message sent successfully! I will get back to you soon.' });
             setFormData({ name: '', email: '', message: '' });
-        }, 3000);
+            e.target.reset(); // Reset the native form
+        } catch (error) {
+            console.error('Email error:', error);
+            setStatus({
+                type: 'error',
+                message: 'Failed to send message. Please try again or email me directly.'
+            });
+        } finally {
+            setIsLoading(false);
+            // Clear success message after 5 seconds
+            setTimeout(() => {
+                if (status.type === 'success') {
+                    setStatus({ type: '', message: '' });
+                }
+            }, 5000);
+        }
     };
 
     const handleChange = (e) => {
@@ -78,11 +116,12 @@ const Contact = () => {
                             <input
                                 type="text"
                                 id="name"
-                                name="name"
+                                name="user_name"
                                 value={formData.name}
                                 onChange={handleChange}
                                 required
                                 placeholder="Your name"
+                                disabled={isLoading}
                             />
                         </div>
 
@@ -91,11 +130,12 @@ const Contact = () => {
                             <input
                                 type="email"
                                 id="email"
-                                name="email"
+                                name="user_email"
                                 value={formData.email}
                                 onChange={handleChange}
                                 required
                                 placeholder="your.email@example.com"
+                                disabled={isLoading}
                             />
                         </div>
 
@@ -108,11 +148,18 @@ const Contact = () => {
                                 onChange={handleChange}
                                 required
                                 placeholder="Your message..."
+                                disabled={isLoading}
                             />
                         </div>
 
-                        <button type="submit" className="btn btn-primary" disabled={submitted}>
-                            {submitted ? 'Message Sent!' : 'Send Message'}
+                        {status.message && (
+                            <div className={`form-status ${status.type}`}>
+                                {status.message}
+                            </div>
+                        )}
+
+                        <button type="submit" className="btn btn-primary" disabled={isLoading}>
+                            {isLoading ? 'Sending...' : 'Send Message'}
                             <Send size={18} />
                         </button>
                     </form>

@@ -64,9 +64,18 @@ const Contact = () => {
     };
 
     const handleChange = (e) => {
+        const { name, value } = e.target;
+        // Map EmailJS field names to state keys
+        const fieldMap = {
+            'user_name': 'name',
+            'user_email': 'email',
+            'message': 'message'
+        };
+        const stateKey = fieldMap[name] || name;
+
         setFormData({
             ...formData,
-            [e.target.name]: e.target.value
+            [stateKey]: value
         });
     };
 

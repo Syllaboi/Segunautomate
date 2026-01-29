@@ -48,11 +48,11 @@ const Header = () => {
                         Hi, I'm <span className="text-gradient">Segun Salako</span>
                     </h1>
                     <p className="header-subtitle">
-                        Data Analyst & Automation Specialist
+                        Vibe Coder & Automation Specialist
                     </p>
                     <p className="header-description">
-                        Transforming data into actionable insights and automating workflows
-                        to drive efficiency and innovation.
+                        Crafting delightful code experiences and automating workflows to
+                        drive efficiency and innovation.
                     </p>
 
                     <div className="header-actions">

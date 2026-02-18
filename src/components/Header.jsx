@@ -32,14 +32,6 @@ const Header = () => {
                 </video>
             </div>
 
-            {/* Site Logo */}
-            <img
-                src="/logo.png"
-                alt="Segun Automates"
-                className="site-logo"
-                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            />
-
             {/* Dark Mode Toggle */}
             <button
                 className="theme-toggle"

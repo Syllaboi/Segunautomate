@@ -15,49 +15,49 @@ export const useContent = () => {
 const defaultContent = {
     about: {
         intro: [
-            "I'm a passionate Data Analyst and Automation Specialist with a proven track record of transforming complex data into actionable insights and streamlining business processes through intelligent automation.",
-            "With expertise in SQL, Power BI, Python, and various automation tools like Zapier, N8N, and Airtable, I help organizations make data-driven decisions and optimize their workflows for maximum efficiency.",
-            "My approach combines technical proficiency with business acumen, ensuring that every solution I deliver not only works flawlessly but also drives real business value."
+            "I'm a passionate AI Systems Architect and Vibe Coder with a proven track record of building scalable intelligent systems and automating complex workflows.",
+            "Specializing in Generative AI, System Architecture, and Cloud Solutions, I leverage tools like n8n, Python, and PostgreSQL to create robust, future-proof applications.",
+            "My 'Vibe Coding' approach combines rapid prototyping with architectural rigor, ensuring that innovative AI solutions are delivered with enterprise-grade reliability."
         ],
         highlights: [
             {
-                title: "Data-Driven",
-                description: "Transforming raw data into meaningful insights that drive strategic decisions"
+                title: "AI Systems Architect",
+                description: "Designing scalable, intelligent infrastructures for modern applications"
             },
             {
-                title: "Process Optimizer",
-                description: "Automating workflows to increase efficiency and reduce manual overhead"
+                title: "Vibe Coder",
+                description: " Rapidly prototyping and deploying AI-driven solutions with cutting-edge tools"
             },
             {
-                title: "Results Focused",
-                description: "Delivering solutions that create measurable impact and business value"
+                title: "Automation Expert",
+                description: "Streamlining complex business logic with n8n, Zapier, and Python scripts"
             }
         ]
     },
     skills: [
         {
-            title: 'Analytics & BI',
-            skills: ['Power BI', 'SQL', 'Excel', 'Data Visualization', 'Statistical Analysis']
+            title: 'AI & Vibe Coding',
+            skills: ['Generative AI', 'LLM Integration', 'Prompt Engineering', 'AI Agents', 'Cursor/Windsurf']
         },
         {
-            title: 'Automation & No-code Tools',
-            skills: ['Zapier', 'Make.com', 'Airtable', 'Notion', 'N8N', 'Webhook Integration', 'Workflow Optimization']
+            title: 'System Architecture',
+            skills: ['Cloud Architecture', 'Scalable Systems', 'Microservices', 'API Design', 'Virtual Machines']
         },
         {
-            title: 'Cloud & Database',
-            skills: ['Google Cloud Console', 'Cloud SQL', 'API Integration', 'PostgreSQL', 'Database Management']
+            title: 'Backend & Database',
+            skills: ['PostgreSQL', 'Supabase', 'SQL Optimization', 'Python', 'Node.js']
         },
         {
-            title: 'IT Infrastructure & Networks',
-            skills: ['Network Administration', 'System Maintenance', 'Hardware Troubleshooting', 'Server Admin', 'RSAT']
+            title: 'Automation & Orchestration',
+            skills: ['n8n', 'Zapier', 'Workflow Automation', 'Docker', 'Kubernetes']
         },
         {
-            title: 'Programming & Development',
-            skills: ['Python', 'Data Analysis', 'Process Automation', 'API Development']
+            title: 'Frontend & Tools',
+            skills: ['React', 'Vite', 'Modern Web Stack', 'Git/GitHub', 'CI/CD']
         },
         {
-            title: 'Productivity & Operations',
-            skills: ['Microsoft Office Suite', 'Technical Support', 'Project Management', 'Remote Collaboration']
+            title: 'Data & Analytics',
+            skills: ['Power BI', 'Advanced SQL', 'Data Modeling', 'ETL Pipelines', 'Statistical Analysis']
         }
     ],
     experience: [

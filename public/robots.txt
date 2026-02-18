@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://segun-salako.vercel.app/sitemap.xml

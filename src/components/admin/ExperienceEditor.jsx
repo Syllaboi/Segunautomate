@@ -69,7 +69,7 @@ const ExperienceEditor = () => {
                             type="text"
                             value={exp.title}
                             onChange={(e) => handleExperienceChange(index, 'title', e.target.value)}
-                            placeholder="e.g., Data Analyst"
+                            placeholder="e.g., AI Systems Architect"
                         />
                     </div>
 

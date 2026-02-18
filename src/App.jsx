@@ -14,6 +14,8 @@ import Privacy from './components/Privacy';
 import AdminLogin from './components/admin/AdminLogin';
 import AdminDashboard from './components/admin/AdminDashboard';
 import ErrorBoundary from './components/ErrorBoundary';
+import { HelmetProvider } from 'react-helmet-async';
+import SEO from './components/SEO';
 import './index.css';
 
 const AppContent = () => {
@@ -35,18 +37,34 @@ const AppContent = () => {
 
   if (route === '/admin') {
     if (!isAuthenticated) {
-      return <AdminLogin />;
+      return (
+        <>
+          <SEO title="Admin Login" />
+          <AdminLogin />
+        </>
+      );
     }
-    return <AdminDashboard />;
+    return (
+      <>
+        <SEO title="Admin Dashboard" />
+        <AdminDashboard />
+      </>
+    );
   }
 
   if (route === '/privacy') {
-    return <Privacy />;
+    return (
+      <>
+        <SEO title="Privacy Policy" description="Privacy Policy for Segun Salako's Portfolio" />
+        <Privacy />
+      </>
+    );
   }
 
   // Home page (default route)
   return (
     <>
+      <SEO />
       <Header />
       <About />
       <Skills />
@@ -62,13 +80,15 @@ function App() {
   return (
     <ThemeProvider>
       <AuthProvider>
-        <ContentProvider>
-          <ProjectsProvider>
-            <ErrorBoundary>
-              <AppContent />
-            </ErrorBoundary>
-          </ProjectsProvider>
-        </ContentProvider>
+        <HelmetProvider>
+          <ContentProvider>
+            <ProjectsProvider>
+              <ErrorBoundary>
+                <AppContent />
+              </ErrorBoundary>
+            </ProjectsProvider>
+          </ContentProvider>
+        </HelmetProvider>
       </AuthProvider>
     </ThemeProvider>
   );

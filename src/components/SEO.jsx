@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
-const SITE_URL = 'https://segun-salako.vercel.app';
+const SITE_URL = 'https://segunautomate.vercel.app';
 const PERSON_NAME = 'Segun Salako';
 const TWITTER_HANDLE = '@segunexploresdata';
 const LINKEDIN_URL = 'https://www.linkedin.com/in/segunexploresdata/';

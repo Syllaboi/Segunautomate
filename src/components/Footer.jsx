@@ -5,19 +5,19 @@ const Footer = () => {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="footer">
+        <footer className="footer" role="contentinfo">
             <div className="container">
                 <div className="footer-content">
-                    <div className="footer-links">
+                    <nav className="footer-links" aria-label="Footer navigation">
                         <a href="/privacy">Privacy Policy</a>
-                        <span className="footer-separator">•</span>
-                        <a href="/admin" className="admin-link">
-                            <Shield size={14} />
+                        <span className="footer-separator" aria-hidden="true">•</span>
+                        <a href="/admin" className="admin-link" aria-label="Admin dashboard">
+                            <Shield size={14} aria-hidden="true" />
                             Admin
                         </a>
-                    </div>
-                    <p>&copy; {currentYear} Segun Salako. All rights reserved.</p>
-                    <p>Built with React & passion for data and automation</p>
+                    </nav>
+                    <p>&copy; {currentYear} <span itemProp="name">Segun Salako</span>. All rights reserved.</p>
+                    <p>No-Code Automation Engineer &amp; AI Systems Architect — Lagos, Nigeria</p>
                 </div>
             </div>
         </footer>

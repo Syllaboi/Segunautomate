@@ -1,20 +1,28 @@
 {
-    "name": "Segun Salako | AI Systems Architect",
+    "name": "Segun Salako | No-Code Automation Engineer, Vibe Coder & AI Systems Architect",
     "short_name": "Segun Salako",
+    "description": "Portfolio of Segun Salako – No-Code Automation Engineer, Vibe Coder, and AI Systems Architect. Expert in n8n, Zapier, AI agents, and workflow automation.",
     "start_url": "/",
+    "scope": "/",
     "display": "standalone",
-    "background_color": "#ffffff",
-    "theme_color": "#000000",
+    "orientation": "portrait-primary",
+    "background_color": "#0f0f1a",
+    "theme_color": "#6366f1",
+    "lang": "en",
+    "categories": ["productivity", "business", "developer tools"],
+    "screenshots": [],
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
             "sizes": "192x192",
-            "type": "image/png"
+            "type": "image/png",
+            "purpose": "any maskable"
         },
         {
             "src": "/android-chrome-512x512.png",
             "sizes": "512x512",
-            "type": "image/png"
+            "type": "image/png",
+            "purpose": "any maskable"
         }
     ]
 }

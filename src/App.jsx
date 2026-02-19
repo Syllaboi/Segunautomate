@@ -39,14 +39,14 @@ const AppContent = () => {
     if (!isAuthenticated) {
       return (
         <>
-          <SEO title="Admin Login" />
+          <SEO title="Admin Login" noIndex={true} />
           <AdminLogin />
         </>
       );
     }
     return (
       <>
-        <SEO title="Admin Dashboard" />
+        <SEO title="Admin Dashboard" noIndex={true} />
         <AdminDashboard />
       </>
     );

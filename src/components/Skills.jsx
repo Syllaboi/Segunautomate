@@ -14,25 +14,25 @@ const Skills = () => {
     };
 
     return (
-        <section id="skills" className="section" style={{ background: 'var(--gradient-surface)' }}>
+        <section id="skills" className="section" style={{ background: 'var(--gradient-surface)' }} aria-labelledby="skills-heading">
             <div className="container">
-                <h2 className="section-title">Skills & Expertise</h2>
+                <h2 id="skills-heading" className="section-title">Skills &amp; Expertise</h2>
 
-                <div className="skills-grid grid grid-2">
+                <div className="skills-grid grid grid-2" role="list">
                     {skills.map((category, index) => (
-                        <div key={index} className="skill-category card">
+                        <article key={index} className="skill-category card" role="listitem">
                             <div className="skill-header">
-                                <div className="skill-icon">
+                                <div className="skill-icon" aria-hidden="true">
                                     {icons[category.title] || <Code size={28} />}
                                 </div>
                                 <h3>{category.title}</h3>
                             </div>
-                            <div className="skill-tags">
+                            <ul className="skill-tags" aria-label={`${category.title} skills`}>
                                 {category.skills.map((skill, idx) => (
-                                    <span key={idx} className="skill-tag">{skill}</span>
+                                    <li key={idx} className="skill-tag">{skill}</li>
                                 ))}
-                            </div>
-                        </div>
+                            </ul>
+                        </article>
                     ))}
                 </div>
             </div>

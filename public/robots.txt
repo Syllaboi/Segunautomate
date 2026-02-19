@@ -1,4 +1,17 @@
+# Allow all crawlers full access
 User-agent: *
 Allow: /
 
+# Block admin routes from being indexed
+Disallow: /admin
+Disallow: /admin/
+
+# Block common bot traps
+Disallow: /*.json$
+Allow: /manifest.json
+
+# Crawl-delay for polite crawlers (Googlebot ignores this but others respect it)
+Crawl-delay: 10
+
+# Sitemap location
 Sitemap: https://segun-salako.vercel.app/sitemap.xml

@@ -9,9 +9,9 @@ const About = () => {
     const icons = [<User size={32} />, <Target size={32} />, <Award size={32} />];
 
     return (
-        <section id="about" className="section">
+        <section id="about" className="section" aria-labelledby="about-heading">
             <div className="container">
-                <h2 className="section-title">About Me</h2>
+                <h2 id="about-heading" className="section-title">About Me</h2>
 
                 <div className="about-content">
                     <div className="about-text">
@@ -20,15 +20,15 @@ const About = () => {
                         ))}
                     </div>
 
-                    <div className="about-highlights grid grid-3">
+                    <div className="about-highlights grid grid-3" role="list">
                         {about.highlights.map((highlight, index) => (
-                            <div key={index} className="highlight-card card">
-                                <div className="highlight-icon">
+                            <article key={index} className="highlight-card card" role="listitem">
+                                <div className="highlight-icon" aria-hidden="true">
                                     {icons[index] || <User size={32} />}
                                 </div>
                                 <h3>{highlight.title}</h3>
                                 <p>{highlight.description}</p>
-                            </div>
+                            </article>
                         ))}
                     </div>
                 </div>

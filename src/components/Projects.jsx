@@ -236,18 +236,18 @@ const Projects = () => {
     };
 
     return (
-        <section id="projects" className="section" style={{ background: 'var(--gradient-surface)' }}>
+        <section id="projects" className="section" style={{ background: 'var(--gradient-surface)' }} aria-labelledby="projects-heading">
             <div className="container">
-                <h2 className="section-title">Projects</h2>
+                <h2 id="projects-heading" className="section-title">Projects</h2>
 
                 {projects.length === 0 ? (
                     <div className="no-projects">
                         <p>No projects yet. Check back soon!</p>
                     </div>
                 ) : (
-                    <div className="projects-grid grid grid-2">
+                    <div className="projects-grid grid grid-2" role="list">
                         {projects.map((project) => (
-                            <div key={project.id} className="project-card card">
+                            <article key={project.id} className="project-card card" role="listitem" aria-label={project.title}>
                                 <VideoPreview url={project.videoLink} />
                                 <ImageCarousel images={project.images || (project.image ? [project.image] : [])} />
 
@@ -256,14 +256,14 @@ const Projects = () => {
                                     <p className="project-description">{renderDescription(project.description)}</p>
 
                                     {project.tags && project.tags.length > 0 && (
-                                        <div className="project-tags">
+                                        <ul className="project-tags" aria-label={`Technologies used in ${project.title}`}>
                                             {project.tags.map((tag, idx) => (
-                                                <span key={idx} className="project-tag">
-                                                    <Tag size={14} />
+                                                <li key={idx} className="project-tag">
+                                                    <Tag size={14} aria-hidden="true" />
                                                     {tag}
-                                                </span>
+                                                </li>
                                             ))}
-                                        </div>
+                                        </ul>
                                     )}
 
                                     {project.link && (
@@ -272,12 +272,13 @@ const Projects = () => {
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="project-link"
+                                            aria-label={`View ${project.title} project (opens in new tab)`}
                                         >
-                                            View Project <ExternalLink size={16} />
+                                            View Project <ExternalLink size={16} aria-hidden="true" />
                                         </a>
                                     )}
                                 </div>
-                            </div>
+                            </article>
                         ))}
                     </div>
                 )}

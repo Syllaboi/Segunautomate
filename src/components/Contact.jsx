@@ -80,16 +80,16 @@ const Contact = () => {
     };
 
     return (
-        <section id="contact" className="section">
+        <section id="contact" className="section" aria-labelledby="contact-heading">
             <div className="container">
-                <h2 className="section-title">Get In Touch</h2>
+                <h2 id="contact-heading" className="section-title">Get In Touch</h2>
 
                 <div className="contact-content">
                     <div className="contact-info">
                         <h3>Let's Connect</h3>
                         <p>
-                            I'm always interested in hearing about new projects and opportunities.
-                            Whether you have a question or just want to say hi, feel free to reach out!
+                            Looking to automate your business workflows, build AI agents, or architect a scalable system?
+                            I'm available for freelance and remote engagements. Let's talk!
                         </p>
 
                         <div className="contact-details">

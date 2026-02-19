@@ -1,12 +1,105 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" prefix="og: https://ogp.me/ns#">
 
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ── Favicon & PWA ──────────────────────────────────────────────── -->
   <link rel="icon" type="image/png" href="/favicon.png" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Segun Salako | AI Systems Architect & Vibe Coder</title>
+  <link rel="apple-touch-icon" href="/android-chrome-192x192.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#6366f1" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Segun Salako" />
+
+  <!-- ── Primary SEO ────────────────────────────────────────────────── -->
+  <title>Segun Salako | No-Code Automation Engineer, Vibe Coder &amp; AI Systems Architect</title>
+  <meta name="description" content="Segun Salako is a No-Code Automation Engineer, Vibe Coder, and AI Systems Architect based in Lagos, Nigeria. Expert in n8n, Zapier, Make.com, AI agents, LLM integration, Generative AI, workflow automation, and scalable cloud systems. Available for freelance and remote work." />
+  <meta name="keywords" content="No-Code Automation Engineer, Vibe Coder, AI Systems Architect, Workflow Automation, n8n Expert, Zapier Specialist, Make.com, AI Automation, Generative AI Developer, LLM Integration, AI Agents, Prompt Engineering, Segun Salako, segunexploresdata, Automation Specialist Nigeria, Remote Automation Engineer, Business Process Automation, API Integration, Vibe Coding" />
+  <meta name="author" content="Segun Salako" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <link rel="canonical" href="https://segun-salako.vercel.app/" />
+
+  <!-- ── Open Graph ──────────────────────────────────────────────────── -->
+  <meta property="og:type" content="profile" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="Segun Salako – Portfolio" />
+  <meta property="og:url" content="https://segun-salako.vercel.app/" />
+  <meta property="og:title" content="Segun Salako | No-Code Automation Engineer, Vibe Coder &amp; AI Systems Architect" />
+  <meta property="og:description" content="Segun Salako is a No-Code Automation Engineer, Vibe Coder, and AI Systems Architect based in Lagos, Nigeria. Expert in n8n, Zapier, Make.com, AI agents, LLM integration, Generative AI, workflow automation, and scalable cloud systems. Available for freelance and remote work." />
+  <meta property="og:image" content="https://segun-salako.vercel.app/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Segun Salako – No-Code Automation Engineer &amp; AI Systems Architect" />
+  <meta property="profile:first_name" content="Segun" />
+  <meta property="profile:last_name" content="Salako" />
+  <meta property="profile:username" content="segunexploresdata" />
+
+  <!-- ── Twitter / X ────────────────────────────────────────────────── -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@segunexploresdata" />
+  <meta name="twitter:creator" content="@segunexploresdata" />
+  <meta name="twitter:title" content="Segun Salako | No-Code Automation Engineer, Vibe Coder &amp; AI Systems Architect" />
+  <meta name="twitter:description" content="Segun Salako is a No-Code Automation Engineer, Vibe Coder, and AI Systems Architect. Expert in n8n, Zapier, AI agents, LLM integration, and workflow automation. Available for freelance work." />
+  <meta name="twitter:image" content="https://segun-salako.vercel.app/og-image.png" />
+  <meta name="twitter:image:alt" content="Segun Salako – No-Code Automation Engineer &amp; AI Systems Architect" />
+
+  <!-- ── Preconnect for performance (Core Web Vitals → better ranking) ── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://firestore.googleapis.com" />
+  <link rel="preconnect" href="https://www.linkedin.com" />
+
+  <!-- ── JSON-LD: Injected at HTML level so bots see it before JS runs ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    "name": "Segun Salako | No-Code Automation Engineer, Vibe Coder & AI Systems Architect",
+    "url": "https://segun-salako.vercel.app/",
+    "mainEntity": {
+      "@type": "Person",
+      "name": "Segun Salako",
+      "url": "https://segun-salako.vercel.app/",
+      "image": "https://segun-salako.vercel.app/og-image.png",
+      "jobTitle": "No-Code Automation Engineer & AI Systems Architect",
+      "description": "Segun Salako is a No-Code Automation Engineer, Vibe Coder, and AI Systems Architect based in Lagos, Nigeria. Expert in n8n, Zapier, Make.com, AI agents, LLM integration, Generative AI, workflow automation, and scalable cloud systems.",
+      "sameAs": [
+        "https://www.linkedin.com/in/segunexploresdata/",
+        "https://twitter.com/segunexploresdata"
+      ],
+      "knowsAbout": [
+        "No-Code Automation", "Vibe Coding", "AI Agents", "n8n", "Zapier",
+        "Make.com", "Generative AI", "LLM Integration", "Prompt Engineering",
+        "System Architecture", "Cloud Architecture", "Supabase", "PostgreSQL",
+        "Python", "React", "ETL Pipelines", "Power BI", "Workflow Automation",
+        "Business Process Automation", "API Integration"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Lagos",
+        "addressCountry": "NG"
+      },
+      "availableService": {
+        "@type": "Service",
+        "name": "Freelance No-Code Automation & AI Development",
+        "description": "No-code automation, AI workflow design, system architecture, and AI agent development for businesses worldwide."
+      }
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Segun Salako – Portfolio",
+    "url": "https://segun-salako.vercel.app/",
+    "description": "Portfolio of Segun Salako – No-Code Automation Engineer, Vibe Coder, and AI Systems Architect.",
+    "author": { "@type": "Person", "name": "Segun Salako" }
+  }
+  </script>
 </head>
 
 <body>

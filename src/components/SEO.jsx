@@ -95,7 +95,7 @@ const SEO = ({ title, description, keywords, image, url, noIndex = false }) => {
   return (
     <Helmet>
       {/* ── Google Site Verification ──────────────────────────────── */}
-      <meta name="google-site-verification" content="x3BUEdiDUKjMuFMX6RvxSnt69yoSy4yhY-hdJPonZoQ" />
+      <meta name="google-site-verification" content="50UlGrPVqUh-bYmc61v7DGa-gdNfVzJKKBMFFhl6hEk" />
 
       {/* ── Core ──────────────────────────────────────────────────── */}
       <html lang="en" />

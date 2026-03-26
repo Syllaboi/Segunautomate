@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import emailjs from '@emailjs/browser';
 import { useContent } from '../context/ContentContext';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import './Contact.css';
@@ -21,33 +20,35 @@ const Contact = () => {
         setIsLoading(true);
         setStatus({ type: '', message: '' });
 
-        // Get these from your .env file
-        const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-        const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-        const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+        const webhookUrl = import.meta.env.VITE_N8N_WEBHOOK_URL;
 
-        if (!serviceId || !templateId || !publicKey) {
+        if (!webhookUrl) {
             setStatus({
                 type: 'error',
-                message: 'Email service is not configured. Please contact the administrator.'
+                message: 'Webhook URL is not configured. Please contact the administrator.'
             });
             setIsLoading(false);
             return;
         }
 
         try {
-            await emailjs.sendForm(
-                serviceId,
-                templateId,
-                e.target,
-                publicKey
-            );
+            const response = await fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
 
             setStatus({ type: 'success', message: 'Message sent successfully! I will get back to you soon.' });
             setFormData({ name: '', email: '', message: '' });
             e.target.reset(); // Reset the native form
         } catch (error) {
-            console.error('Email error:', error);
+            console.error('Submission error:', error);
             setStatus({
                 type: 'error',
                 message: 'Failed to send message. Please try again or email me directly.'

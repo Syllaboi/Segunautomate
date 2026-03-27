@@ -16,6 +16,7 @@ import AdminDashboard from './components/admin/AdminDashboard';
 import ErrorBoundary from './components/ErrorBoundary';
 import { HelmetProvider } from 'react-helmet-async';
 import SEO from './components/SEO';
+import Chatbot from './components/Chatbot';
 import './index.css';
 
 const AppContent = () => {
@@ -85,6 +86,7 @@ function App() {
             <ProjectsProvider>
               <ErrorBoundary>
                 <AppContent />
+                <Chatbot />
               </ErrorBoundary>
             </ProjectsProvider>
           </ContentProvider>

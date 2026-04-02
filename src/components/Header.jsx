@@ -1,5 +1,6 @@
+import { useState, useEffect } from 'react';
 import { useContent } from '../context/ContentContext';
-import { Moon, Sun, Mail, Linkedin, FileText } from 'lucide-react';
+import { Moon, Sun, Mail, Linkedin, FileText, ArrowRight } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import './Header.css';
 
@@ -7,89 +8,136 @@ const Header = () => {
     const { theme, toggleTheme } = useTheme();
     const { content } = useContent();
     const { contact } = content;
+    const [scrolled, setScrolled] = useState(false);
+
+    useEffect(() => {
+        const onScroll = () => setScrolled(window.scrollY > 20);
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return () => window.removeEventListener('scroll', onScroll);
+    }, []);
 
     const scrollToSection = (id) => {
-        const element = document.getElementById(id);
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-        }
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
     };
+
+    const stats = [
+        { value: '50', suffix: '+', label: 'Projects Delivered' },
+        { value: '3',  suffix: 'yrs', label: 'Experience' },
+        { value: '100', suffix: '%', label: 'Remote Ready' },
+    ];
 
     return (
         <header className="header" role="banner">
-            {/* Video Background */}
-            <div className="header-video-container" aria-hidden="true">
-                <div className="header-video-overlay"></div>
-                <video
-                    className="header-video"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    aria-hidden="true"
-                >
-                    <source src="/video/header-video.mp4" type="video/mp4" />
-                </video>
+
+            {/* ── Shader Background ── */}
+            <div className="header-shader-bg" aria-hidden="true">
+                <div className="shader-blob shader-blob-1" />
+                <div className="shader-blob shader-blob-2" />
+                <div className="shader-blob shader-blob-3" />
             </div>
+            <div className="header-grid"   aria-hidden="true" />
+            <div className="header-vignette" aria-hidden="true" />
 
-            {/* Dark Mode Toggle */}
-            <button
-                className="theme-toggle"
-                onClick={toggleTheme}
-                aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-            >
-                {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
-            </button>
-
-            {/* Header Content */}
-            <div className="header-content container">
-                <div className="header-text">
-                    <h1 className="header-title">
-                        Hi, I'm <span className="text-gradient">Segun Salako</span>
-                    </h1>
-                    <p className="header-subtitle">
-                        No-Code Automation Engineer, Vibe Coder &amp; AI Systems Architect
-                    </p>
-                    <p className="header-description">
-                        Building intelligent automation workflows, AI agents, and scalable cloud systems.
-                        Specialising in n8n, Zapier, Make.com, Generative AI, and no-code/low-code solutions
-                        for businesses worldwide — available for freelance &amp; remote work.
-                    </p>
-
-                    <div className="header-actions">
-                        <button
-                            className="btn btn-primary"
-                            onClick={() => scrollToSection('projects')}
-                            aria-label="View Segun Salako's automation and AI projects"
-                        >
-                            View My Work
+            {/* ── Fixed Nav ── */}
+            <nav className={`header-nav${scrolled ? ' scrolled' : ''}`} aria-label="Primary navigation">
+                <div className="nav-logo" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+                    Segun<span>.</span>
+                </div>
+                <div className="nav-links" role="list">
+                    {['about','skills','experience','projects','contact'].map(id => (
+                        <button key={id} onClick={() => scrollToSection(id)} role="listitem">
+                            {id.charAt(0).toUpperCase() + id.slice(1)}
                         </button>
-                        <button
-                            className="btn btn-secondary"
-                            onClick={() => scrollToSection('contact')}
-                            aria-label="Get in touch with Segun Salako"
-                        >
-                            Get In Touch
-                        </button>
-                    </div>
+                    ))}
+                </div>
+                <div className="nav-actions">
+                    <button
+                        className="theme-toggle"
+                        onClick={toggleTheme}
+                        aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+                    >
+                        {theme === 'light' ? <Moon size={17} /> : <Sun size={17} />}
+                    </button>
+                    <button
+                        className="btn btn-primary"
+                        style={{ padding: '0.55rem 1.2rem', fontSize: '0.85rem' }}
+                        onClick={() => scrollToSection('contact')}
+                    >
+                        Hire Me
+                    </button>
+                </div>
+            </nav>
 
-                    <nav className="header-social" aria-label="Social media and contact links">
-                        <a href={`mailto:${contact.email}`} aria-label="Send Segun Salako an email">
-                            <Mail size={20} />
-                        </a>
-                        <a href={contact.linkedin} target="_blank" rel="noopener noreferrer" aria-label="Segun Salako on LinkedIn">
-                            <Linkedin size={20} />
-                        </a>
-                        <a href={contact.resume} target="_blank" rel="noopener noreferrer" aria-label="View Segun Salako's resume">
-                            <FileText size={20} />
-                        </a>
-                    </nav>
+            {/* ── Hero Content — 21st.dev split-line style ── */}
+            <div className="header-content">
+
+                {/* Live badge */}
+                <div className="header-eyebrow">
+                    <span className="header-eyebrow-dot" />
+                    Available for freelance &amp; remote work
+                </div>
+
+                {/* Dramatic split-line title */}
+                <h1 className="header-title">
+                    <span className="line">Hi, I'm</span>
+                    <span className="line line-gradient">Segun Salako</span>
+                </h1>
+
+                <p className="header-subtitle">
+                    No-Code Automation Engineer, AI Systems Architect &amp; Vibe Coder —
+                    building intelligent workflows and scalable cloud systems for businesses worldwide.
+                </p>
+
+                <div className="header-actions">
+                    <button
+                        className="btn btn-primary"
+                        onClick={() => scrollToSection('projects')}
+                        aria-label="View projects"
+                    >
+                        View My Work <ArrowRight size={17} />
+                    </button>
+                    <button
+                        className="btn btn-secondary"
+                        onClick={() => scrollToSection('contact')}
+                        aria-label="Contact me"
+                    >
+                        Get In Touch
+                    </button>
+                </div>
+
+                <nav className="header-social" aria-label="Social links">
+                    <a href={`mailto:${contact.email}`} aria-label="Email"><Mail size={17} /></a>
+                    <a href={contact.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><Linkedin size={17} /></a>
+                    <a href={contact.resume} target="_blank" rel="noopener noreferrer" aria-label="Resume"><FileText size={17} /></a>
+                </nav>
+
+                {/* Stats */}
+                <div className="header-stats">
+                    {stats.map(({ value, suffix, label }) => (
+                        <div key={label} className="stat-item">
+                            <span className="stat-value">{value}<span>{suffix}</span></span>
+                            <span className="stat-label">{label}</span>
+                        </div>
+                    ))}
                 </div>
             </div>
 
-            {/* Scroll Indicator */}
+            {/* ── 21st.dev Pulsing Circle ── */}
+            <div className="pulsing-circle-wrapper" aria-hidden="true">
+                <div className="pulsing-circle">
+                    <div className="pulse-ring" />
+                    <div className="pulse-ring" />
+                    <div className="pulse-ring" />
+                    <div className="pulse-ring" />
+                    <div className="pulse-core" />
+                </div>
+            </div>
+
+            {/* Scroll indicator */}
             <div className="scroll-indicator" aria-hidden="true">
-                <div className="scroll-mouse"></div>
+                <div className="scroll-mouse" />
+                <span>Scroll</span>
             </div>
         </header>
     );

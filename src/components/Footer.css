@@ -1,53 +1,74 @@
+/* ===================================================
+   FOOTER — Mailreach Premium Dark SaaS
+   =================================================== */
+
 .footer {
-    background-color: var(--color-surface);
+    background: var(--color-bg-alt);
     border-top: 1px solid var(--color-border);
-    padding: var(--spacing-xl) 0;
-    margin-top: var(--spacing-3xl);
+    padding: var(--sp-10) 0;
 }
 
 .footer-content {
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--sp-4);
+}
+
+.footer-brand {
+    font-size: var(--text-lg);
+    font-weight: 800;
+    color: var(--color-text-h);
+    letter-spacing: -0.04em;
+}
+.footer-brand span {
+    color: var(--color-accent);
 }
 
 .footer-links {
-    margin-bottom: var(--spacing-md);
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: var(--spacing-sm);
+    gap: var(--sp-6);
+}
+.footer-links a {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    font-weight: 500;
+    transition: color var(--ease-fast);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-1);
+}
+.footer-links a:hover {
+    color: var(--color-text-h);
 }
 
 .footer-separator {
-    color: var(--color-text-muted);
-}
-
-.footer-links a {
-    color: var(--color-primary);
-    font-weight: 500;
-    transition: color var(--transition-fast);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-}
-
-.footer-links a:hover {
-    color: var(--color-primary-hover);
+    color: var(--color-border-hover);
 }
 
 .admin-link {
-    opacity: 0.7;
+    opacity: 0.5;
+    font-size: var(--text-xs);
 }
-
 .admin-link:hover {
     opacity: 1;
+    color: var(--color-secondary) !important;
 }
 
-.footer-content p {
-    margin-bottom: 0.5rem;
-    color: var(--color-text-secondary);
+.footer-copy {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    margin: 0;
+}
+.footer-copy span {
+    color: var(--color-accent);
 }
 
-.footer-content p:last-child {
-    margin-bottom: 0;
-    font-size: 0.9rem;
+@media (max-width: 640px) {
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
 }

@@ -3,7 +3,7 @@ import { ThemeProvider } from './context/ThemeContext';
 import { ProjectsProvider } from './context/ProjectsContext';
 import { ContentProvider } from './context/ContentContext';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import Header from './components/Header';
+import MainHero from './components/MainHero';
 import About from './components/About';
 import Skills from './components/Skills';
 import Experience from './components/Experience';
@@ -66,7 +66,7 @@ const AppContent = () => {
   return (
     <>
       <SEO />
-      <Header />
+      <MainHero />
       <About />
       <Skills />
       <Experience />

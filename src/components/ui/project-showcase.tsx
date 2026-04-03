@@ -3,6 +3,7 @@
 import type React from "react"
 import { useState, useRef, useEffect } from "react"
 import { ArrowUpRight } from "lucide-react"
+import { useIsTouchDevice } from "../../hooks/useMediaQuery"
 
 export interface ProjectData {
   title: string
@@ -22,8 +23,12 @@ export function ProjectShowcase({ projects }: ProjectShowcaseProps) {
   const [isVisible, setIsVisible] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
   const animationRef = useRef<number | null>(null)
+  const isTouchDevice = useIsTouchDevice()
 
   useEffect(() => {
+    // Skip animation loop on touch devices
+    if (isTouchDevice) return
+
     const lerp = (start: number, end: number, factor: number) => {
       return start + (end - start) * factor
     }
@@ -43,9 +48,10 @@ export function ProjectShowcase({ projects }: ProjectShowcaseProps) {
         cancelAnimationFrame(animationRef.current)
       }
     }
-  }, [mousePosition])
+  }, [mousePosition, isTouchDevice])
 
   const handleMouseMove = (e: React.MouseEvent) => {
+    if (isTouchDevice) return
     if (containerRef.current) {
       const rect = containerRef.current.getBoundingClientRect()
       setMousePosition({
@@ -56,46 +62,52 @@ export function ProjectShowcase({ projects }: ProjectShowcaseProps) {
   }
 
   const handleMouseEnter = (index: number) => {
+    if (isTouchDevice) return
     setHoveredIndex(index)
     setIsVisible(true)
   }
 
   const handleMouseLeave = () => {
+    if (isTouchDevice) return
     setHoveredIndex(null)
     setIsVisible(false)
   }
 
   return (
     <div ref={containerRef} onMouseMove={handleMouseMove} className="relative w-full max-w-4xl mx-auto px-0 py-8">
-      <div
-        className="pointer-events-none absolute z-50 overflow-hidden rounded-xl shadow-2xl"
-        style={{
-          left: 0,
-          top: 0,
-          transform: `translate3d(${smoothPosition.x + 20}px, ${smoothPosition.y - 100}px, 0)`,
-          opacity: isVisible ? 1 : 0,
-          scale: isVisible ? 1 : 0.8,
-          transition: "opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), scale 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-        }}
-      >
-        <div className="relative w-[320px] h-[200px] bg-[var(--color-bg-card)] rounded-xl overflow-hidden">
-          {projects.map((project, index) => (
-            <img
-              key={project.title + index}
-              src={project.image || "https://placehold.co/400?text=No+Image"}
-              alt={project.title}
-              className="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-out"
-              style={{
-                opacity: hoveredIndex === index ? 1 : 0,
-                scale: hoveredIndex === index ? 1 : 1.1,
-                filter: hoveredIndex === index ? "none" : "blur(10px)",
-              }}
-            />
-          ))}
-          {/* Subtle gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-bg)]/20 to-transparent" />
+      {/* Floating Cursor/Image - Disabled on mobile/touch for performance */}
+      {!isTouchDevice && (
+        <div
+          className="pointer-events-none absolute z-50 overflow-hidden rounded-xl shadow-2xl"
+          style={{
+            left: 0,
+            top: 0,
+            transform: `translate3d(${smoothPosition.x + 20}px, ${smoothPosition.y - 100}px, 0)`,
+            opacity: isVisible ? 1 : 0,
+            scale: isVisible ? 1 : 0.8,
+            transition: "opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), scale 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+            willChange: 'transform, opacity'
+          }}
+        >
+          <div className="relative w-[320px] h-[200px] bg-[var(--color-bg-card)] rounded-xl overflow-hidden">
+            {projects.map((project, index) => (
+              <img
+                key={project.title + index}
+                src={project.image || "https://placehold.co/400?text=No+Image"}
+                alt={project.title}
+                className="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-out"
+                style={{
+                  opacity: hoveredIndex === index ? 1 : 0,
+                  scale: hoveredIndex === index ? 1 : 1.1,
+                  filter: hoveredIndex === index ? "none" : "blur(10px)",
+                }}
+              />
+            ))}
+            {/* Subtle gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-bg)]/20 to-transparent" />
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="flex flex-col gap-6">
         {projects.map((project, index) => {
@@ -119,6 +131,7 @@ export function ProjectShowcase({ projects }: ProjectShowcaseProps) {
                   transition-all duration-500 ease-out
                   ${hoveredIndex === index ? "opacity-40 scale-100" : "opacity-0 scale-95"}
                 `}
+                style={{ willChange: 'opacity, transform' }}
               />
 
               <div className="relative flex items-start justify-between gap-4 z-10">
@@ -174,3 +187,4 @@ export function ProjectShowcase({ projects }: ProjectShowcaseProps) {
     </div>
   )
 }
+

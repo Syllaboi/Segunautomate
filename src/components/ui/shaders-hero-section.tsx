@@ -1,11 +1,10 @@
 "use client"
 
-import { PulsingBorder, MeshGradient } from "@paper-design/shaders-react"
-import { motion } from "framer-motion"
+import { MeshGradient } from "@paper-design/shaders-react"
 import type React from "react"
-import { useEffect, useRef, useState } from "react"
-
+import { useRef } from "react"
 import { useTheme } from "../../context/ThemeContext"
+import { useIsMobile } from "../../hooks/useMediaQuery"
 
 interface ShaderBackgroundProps {
   children: React.ReactNode
@@ -14,6 +13,7 @@ interface ShaderBackgroundProps {
 export function ShaderBackground({ children }: ShaderBackgroundProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const { theme } = useTheme()
+  const isMobile = useIsMobile()
   const isLight = theme === 'light'
 
   const gradientColors = isLight 
@@ -25,51 +25,33 @@ export function ShaderBackground({ children }: ShaderBackgroundProps) {
     : ["#000000", "#ffffff", "#8B4513", "#000000"]
 
   return (
-    <div ref={containerRef} className="min-h-screen w-full relative transition-colors duration-500 bg-[var(--color-bg)]">
-      {/* SVG Filters */}
-      <svg className="absolute inset-0 w-0 h-0">
-        <defs>
-          <filter id="glass-effect" x="-50%" y="-50%" width="200%" height="200%">
-            <feTurbulence baseFrequency="0.005" numOctaves="1" result="noise" />
-            <feDisplacementMap in="SourceGraphic" in2="noise" scale="0.3" />
-            <feColorMatrix
-              type="matrix"
-              values="1 0 0 0 0.02
-                      0 1 0 0 0.02
-                      0 0 1 0 0.05
-                      0 0 0 0.9 0"
-              result="tint"
-            />
-          </filter>
-          <filter id="gooey-filter" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
-            <feColorMatrix
-              in="blur"
-              mode="matrix"
-              values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9"
-              result="gooey"
-            />
-            <feComposite in="SourceGraphic" in2="gooey" operator="atop" />
-          </filter>
-        </defs>
-      </svg>
-
+    <div 
+      ref={containerRef} 
+      className="min-h-screen w-full relative transition-colors duration-500 bg-[var(--color-bg)]"
+      style={{ willChange: 'transform' }}
+    >
       {/* Background Shaders */}
       <MeshGradient
         className="absolute inset-0 w-full h-full transition-opacity duration-1000"
         colors={gradientColors}
-        speed={0.3}
+        performance={isMobile ? "low" : "high"}
+        speed={isMobile ? 0.15 : 0.3}
       />
-      <MeshGradient
-        className="absolute inset-0 w-full h-full opacity-60 transition-opacity duration-1000"
-        colors={gradientOverlayColors}
-        speed={0.2}
-      />
+      
+      {/* Only render overlay gradient on desktop for performance */}
+      {!isMobile && (
+        <MeshGradient
+          className="absolute inset-0 w-full h-full opacity-60 transition-opacity duration-1000"
+          colors={gradientOverlayColors}
+          speed={0.2}
+        />
+      )}
 
       {children}
     </div>
   )
 }
+
 
 import { Sparkles } from "lucide-react"
 

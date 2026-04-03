@@ -437,6 +437,7 @@ label {
 .reveal-left {
   opacity: 0;
   transform: translateX(-40px);
+  will-change: opacity, transform;
   transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
               transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -556,7 +557,15 @@ label {
   filter: blur(80px);
   pointer-events: none;
   z-index: 0;
+  will-change: transform;
 }
+
+@media (max-width: 768px) {
+  .orb {
+    filter: blur(40px); /* Reduced blur for mobile performance */
+  }
+}
+
 .orb-green {
   background: rgba(0, 243, 147, 0.12);
   width: 600px;
@@ -578,6 +587,12 @@ label {
     will-change: transform;
     pointer-events: none;
     z-index: 0;
+}
+
+@media (max-width: 768px) {
+  .global-shader-blob {
+    filter: blur(60px); /* Reduced blur for mobile performance */
+  }
 }
 .shader-blue {
     background: radial-gradient(circle, rgba(77, 159, 255, 0.08) 0%, transparent 70%);

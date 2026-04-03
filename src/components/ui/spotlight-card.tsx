@@ -38,19 +38,33 @@ const GlowCard: React.FC<GlowCardProps> = ({
   const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
+    let animationFrameId: number;
     const syncPointer = (e: PointerEvent) => {
-      const { clientX: x, clientY: y } = e;
+      // Disable effect on touch devices to improve scrolling performance
+      if (e.pointerType === 'touch') return;
       
       if (cardRef.current && isHovered) {
-        cardRef.current.style.setProperty('--x', x.toFixed(2));
-        cardRef.current.style.setProperty('--xp', (x / window.innerWidth).toFixed(2));
-        cardRef.current.style.setProperty('--y', y.toFixed(2));
-        cardRef.current.style.setProperty('--yp', (y / window.innerHeight).toFixed(2));
+        if (animationFrameId) cancelAnimationFrame(animationFrameId);
+        
+        animationFrameId = requestAnimationFrame(() => {
+          if (!cardRef.current) return;
+          const rect = cardRef.current.getBoundingClientRect();
+          const localX = e.clientX - rect.left;
+          const localY = e.clientY - rect.top;
+          
+          cardRef.current.style.setProperty('--x', localX.toFixed(2));
+          cardRef.current.style.setProperty('--xp', (localX / rect.width).toFixed(2));
+          cardRef.current.style.setProperty('--y', localY.toFixed(2));
+          cardRef.current.style.setProperty('--yp', (localY / rect.height).toFixed(2));
+        });
       }
     };
 
-    document.addEventListener('pointermove', syncPointer);
-    return () => document.removeEventListener('pointermove', syncPointer);
+    document.addEventListener('pointermove', syncPointer, { passive: true });
+    return () => {
+      document.removeEventListener('pointermove', syncPointer);
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+    };
   }, [isHovered]);
 
   const { base, spread } = glowColorMap[glowColor];
@@ -88,7 +102,6 @@ const GlowCard: React.FC<GlowCardProps> = ({
       backgroundColor: 'var(--backdrop, transparent)',
       backgroundSize: 'calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)))',
       backgroundPosition: '50% 50%',
-      backgroundAttachment: 'fixed',
       border: 'var(--border-size) solid var(--backup-border)',
       position: 'relative' as const,
       touchAction: 'none' as const,
@@ -115,7 +128,6 @@ const GlowCard: React.FC<GlowCardProps> = ({
       inset: calc(var(--border-size) * -1);
       border: var(--border-size) solid transparent;
       border-radius: calc(var(--radius) * 1px);
-      background-attachment: fixed;
       background-size: calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)));
       background-repeat: no-repeat;
       background-position: 50% 50%;
@@ -145,23 +157,11 @@ const GlowCard: React.FC<GlowCardProps> = ({
       );
     }
     
-    [data-glow] [data-glow] {
-      position: absolute;
-      inset: 0;
-      will-change: filter;
-      opacity: var(--outer, 1);
-      border-radius: calc(var(--radius) * 1px);
-      border-width: calc(var(--border-size) * 20);
-      filter: blur(calc(var(--border-size) * 10));
-      background: none;
-      pointer-events: none;
-      border: none;
-      transition: opacity 0.5s ease;
-    }
-    
-    [data-glow] > [data-glow]::before {
-      inset: -10px;
-      border-width: 10px;
+    @media (pointer: coarse), (max-width: 768px) {
+      [data-glow]::before, 
+      [data-glow]::after {
+        display: none !important;
+      }
     }
   `;
 
@@ -185,7 +185,6 @@ const GlowCard: React.FC<GlowCardProps> = ({
           ${className}
         `}
       >
-        <div ref={innerRef} data-glow></div>
         {children}
       </div>
     </>

@@ -1,49 +1,53 @@
 import { useEffect, useRef } from 'react';
 
-/**
- * useScrollReveal — attaches Intersection Observer to all
- * `.reveal`, `.reveal-left` elements within the component.
- *
- * Usage: call `useScrollReveal()` once in each section component.
- * Pass dependencies for elements fetched asynchronously.
- */
-const useScrollReveal = (threshold = 0.12, dependencies = []) => {
-    const observerRef = useRef(null);
+// Singleton variables to share observer across all component instances
+let globalObserver = null;
+const observedElements = new WeakSet();
 
-    useEffect(() => {
-        // Disconnect previous observer if any
-        if (observerRef.current) {
-            observerRef.current.disconnect();
-        }
-
-        observerRef.current = new IntersectionObserver(
+const getObserver = (threshold) => {
+    if (!globalObserver) {
+        globalObserver = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
-                        // Once revealed, stop observing
-                        observerRef.current?.unobserve(entry.target);
+                        globalObserver?.unobserve(entry.target);
                     }
                 });
             },
             { threshold, rootMargin: '0px 0px -40px 0px' }
         );
+    }
+    return globalObserver;
+};
 
-        // Uses a timeout to ensure DOM has updated before observing elements.
+/**
+ * useScrollReveal — attaches Intersection Observer to all
+ * `.reveal`, `.reveal-left` elements within the component.
+ *
+ * It uses a global observer to prevent severe scroll lag.
+ */
+const useScrollReveal = (threshold = 0.12, dependencies = []) => {
+    const observerRef = useRef(null);
+
+    useEffect(() => {
+        observerRef.current = getObserver(threshold);
+
         const timeoutId = setTimeout(() => {
             const elements = document.querySelectorAll('.reveal, .reveal-left');
+            
             elements.forEach((el) => {
-                if (!el.classList.contains('visible')) {
+                // If it isn't visible yet and we haven't observed it
+                if (!el.classList.contains('visible') && !observedElements.has(el)) {
                     observerRef.current?.observe(el);
+                    observedElements.add(el);
                 }
             });
         }, 50);
 
-        return () => {
-            clearTimeout(timeoutId);
-            observerRef.current?.disconnect();
-        };
+        return () => clearTimeout(timeoutId);
     }, [threshold, ...dependencies]); // Re-run effect when dependencies change
 };
 
 export default useScrollReveal;
+

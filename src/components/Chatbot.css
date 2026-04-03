@@ -12,6 +12,7 @@
   align-items: flex-end;
   pointer-events: none;
   font-family: var(--font-body);
+  transform: translateZ(0); /* Fix for iOS jumping */
 }
 
 .chatbot-toggle, .chatbot-window {

@@ -1,0 +1,177 @@
+# KNOWLEDGE BASE: SEGUN SALAKO
+
+==================================================
+1. OVERVIEW & PROFESSIONAL IDENTITY
+==================================================
+Name: Segun Salako
+Title: AI Automation Specialist & System Architect
+Identity: Segun is a dynamic AI Automation Specialist and system architect who helps businesses eliminate repetitive tasks and scale their operations using advanced automation tools. He combines no-code platforms with custom "vibe coding" techniques to create intelligent, end-to-end workflows spanning lead generation, content management, customer support, and overarching business operations.
+
+==================================================
+2. TECHNOLOGIES & EXPERTISE
+==================================================
+His expertise covers a wide range of tools and technologies including:
+- Workflow Engines: n8n (self-hosted & cloud deployments), Zapier, Make (Integromat)
+- AI & LLM Tools: OpenAI, Gemini, DALL·E, Together AI, ElevenLabs, DeepGram
+- Workspaces & CMS: Google Workspace, Airtable, Notion, WordPress
+- Databases & RAG: Supabase, PostgreSQL, Weaviate, Pinecone, Firebase, SQLite
+- Backend & Integrations: Custom REST APIs, GraphQL integrations, robust webhook solutions, Redis
+- Frontend & Full-Stack: Next.js, React, React Native (Expo), custom vibe coding
+
+==================================================
+3. CORE AUTOMATION SERVICES
+==================================================
+Lead Generation & Sales Automation
+- Automated lead capture and multi-channel routing (from Facebook, WordPress, etc.).
+- AI-powered cold email and messaging campaigns.
+- CRM integrations with HubSpot, Airtable, Notion, and custom Google Sheet portals.
+
+Content & Social Media
+- SEO article generation, social post scheduling, and automated image creation.
+- End-to-end workflows bridging RSS feeds, AI editors, and publishing platforms like Buffer or Mailerlite.
+
+Business Operations
+- Invoice and document automation, employee onboarding, and notification systems.
+- Data pipelines linking Google Sheets, Email, Slack, Zoom, and more.
+
+Data Analysis & Engineering
+- Automated data extraction and AI-driven insights from messy CSVs.
+- Dashboard creation, database syncing (Supabase, PostgreSQL), and CSV/vector ingestion solutions.
+
+Customer Support
+- AI-powered chatbots, ticketing systems, and multi-channel support workflows (WhatsApp, SMS, Email).
+
+RAG & AI Knowledge Systems
+- RAG (Retrieval-Augmented Generation) pipelines that integrate vector databases with AI models.
+- Smart document retrieval and auto-vectorization services for customer and internal systems.
+
+Systems Integration & Custom APIs
+- Seamless connectivity with REST/GraphQL APIs.
+- API rate limit management via Redis queues, exponential back-off, and dead-letter logging.
+
+Advanced n8n & Vibe Coding
+- Custom multi-branch logic and failsafe workflows.
+- Full-stack web and mobile app development enhanced with vibe coding techniques.
+
+==================================================
+4. EXPERIENCE & EDUCATION
+==================================================
+• Freelance Vibe Coder & System Architect (2025 – present)
+  – Delivered AI-based automations and custom web applications using both no-code and custom coding techniques.
+  – Developed scalable workflows that significantly cut down manual processes.
+• Remote Workflow Automation Specialist (2024 – present)
+  – Automated marketing funnels, sales pipelines, and customer support systems across varied industries.
+• Server Administrator (2024 – present)
+  – Ensured reliable server management with 99.9% uptime and seamless deployment of critical systems.
+
+Education:
+- BSc in Computer Science, National Open University of Nigeria (2019 – 2023)
+
+==================================================
+5. FREQUENTLY ASKED QUESTIONS (FAQ)
+==================================================
+Q1. I have leads coming from Facebook, a WordPress form and a random Google Sheet. Can you merge them into one place without duplicates?
+A: Yes. I build a central n8n workflow that catches each source with a webhook or polling trigger, normalises the fields, hashes the email/phone to find duplicates, then drops the clean record into Airtable, HubSpot or Notion. Once live, you’ll never export a CSV by hand again.
+
+Q2. My CRM is “just Google Sheets” – is that enough?
+A: For up to ~50k rows it’s fine. I add data-validation, unique IDs and a simple UI with Airtable’s Interface designer or a mini Next.js portal so your team gets CRM benefits without migrating anywhere.
+
+Q3. Can you qualify leads automatically before they book a call?
+A: I add an OpenAI step that scores budget, timeline and intent from the form answers. Only hot leads create a Calendly event; lukewarm ones enter a nurture email sequence.
+
+Q4. I record podcast audio – can it become blog posts, tweets and an email automatically?
+A: Upload the mp3 -> DeepGram for transcription -> GPT-4 re-writes in three tones -> n8n routes to WordPress (blog), Buffer (tweets) and MailerLite (email). DALL·E whips up a cover image that matches the episode title.
+
+Q5. I hate designing Instagram carousels. Any fix?
+A: I vibe-code a tiny web app. You paste the text, it calls DALL·E for five square images, merges them into a PDF carousel and posts via Instagram Graph API at the hour you pick. No Canva clicks needed.
+
+Q6. Can a WhatsApp bot pull live order status from my Shopify store?
+A: I host a lightweight Express server that queries Shopify by order number, formats the reply and shoots it back through Twilio WhatsApp. Customers get instant updates 24/7.
+
+Q7. What if customers prefer voice notes instead of text?
+A: ElevenLabs converts the text answer into audio; Twilio sends it as a voice note. It feels surprisingly human.
+
+Q8. What exactly is a RAG pipeline and do I need one?
+A: RAG = your private data + vector search + AI. If staff keep asking “Where’s the SOP for refunds?” or clients want instant answers from your PDFs, RAG gives them accurate replies without you copy/pasting. I build mine with Supabase pgvector or Weaviate.
+
+Q9. How often does the knowledge base update itself?
+A: I schedule nightly syncs: new Notion pages -> auto-chunked -> embedded -> inserted into the vector table. Zero manual work.
+
+Q10. I only have an idea – no wireframes, no brand board. Can we still start?
+A: Absolutely. We jump on a 30-min call, I convert your words into a Figma wireframe with AI, then vibe-code the first version while you watch on Loom. We polish the UI as we go.
+
+Q11. Do I own the source code?
+A: 100%. Repos live in your GitHub; I transfer Vercel/Netlify projects to your account on day one.
+
+Q12. Can you add login, payments and an admin panel to a vibe-coded site?
+A: Next-Auth for social logins, Stripe/Paystack for billing, and a role-based dashboard auto-generated from your database schema.
+
+Q13. I need a simple barcode-scanner app that uploads to my Airtable inventory. How fast?
+A: React Native Expo app: camera scan -> API call -> Airtable row. TestFlight build within 48h.
+
+Q14. Can the app work offline and sync later?
+A: Yes. Local SQLite cache queues the scans; uploads automatically when back online.
+
+Q15. Which database should I pick – Airtable, Supabase or Firebase?
+Quick rule:
+- Airtable = spreadsheet comfort + low-code automations.
+- Supabase = full SQL, foreign keys, vector plug-in, scales forever.
+- Firebase = real-time sync, great for chat or multiplayer.
+I migrate between them without data loss.
+
+Q16. Can you clean a 50k-row messy CSV before it hits production?
+A: Python pipeline: dedupe, standardize phone numbers, validate emails, geocode addresses, output ready-to-insert SQL.
+
+Q17. How do you handle APIs with strict rate limits?
+A: I queue requests in Redis, drip them just under the limit, add exponential back-off and dead-letter logging so nothing drops.
+
+Q18. I want a Slack bot that roasts the team every Friday with project stats. Can AI be funny?
+A: I feed git commits, closed tickets and revenue numbers to GPT-4 with a “roast” persona. Example: “John pushed 2 commits this week – both were typo fixes. Legend.”
+
+Q19. Can you automate birthday surprises for employees?
+A: HR sheet -> daily check -> if birthday, trigger Loom video generator (AI voice greeting), post in #general and email a Starbucks e-gift card.
+
+Q20. I hate writing meeting minutes – help?
+A: Zoom cloud recording -> webhook -> DeepGram -> GPT-4 summary -> Notion page tagged with attendees and action items. Slack bot pings owners.
+
+Q21. Do you offer support after launch?
+A: Monthly “automation clinic” retainer. You dump new pains in a shared channel; I ship fixes, usually same day.
+
+Q22. How do I get started today?
+A: Send me a voice note or email describing the pain point. I’ll reply with a 3-step automation map (no jargon). You approve, I build, you sleep better.
+
+Q23. Where are you located and what time zones do you work in?
+A: I am an independent Professional working globally. I easily adapt to overlap with US, European, and African time zones to ensure seamless communication and project delivery.
+
+Q24. How do you charge for your services?
+A: It depends on your needs! I offer one-time project-based pricing for specific builds (like an app or a single complex automation), and a monthly retainer for continuous optimization, system architecture, and support.
+
+Q25. How do I contact you?
+A: You can reach out directly via the contact form on my portfolio website, or send me an email. I will respond incredibly fast!
+
+==================================================
+6. KEY PORTFOLIO PROJECTS
+==================================================
+1. SalesData Dashboard
+- Description: Developed a dashboard to track $728K in electronics sales, leveraging automation and data visualization to provide actionable insights for an Upwork client.
+- Tags/Tools: Data Viz, Automation, Python, Airtable, Zapier.
+
+2. Content Creation Workflow
+- Description: Developed a smart Airtable content calendar to streamline content management, reducing creation time by 60% and increasing on-time publishing by 85%.
+- Tags/Tools: Airtable, Zapier, Automation, Content Strategy.
+
+3. AI Education Platform Infrastructure
+- Description: Designed an AI education platform infrastructure using Notion and Google Suite to streamline enrollment, content, and outreach. Reduced admin tasks by 50% and achieved 90% student satisfaction.
+- Tags/Tools: Notion, Google Suite, Automation, EdTech.
+
+4. Remote Job Alert System
+- Description: Built an automated remote job alert system using Google Apps Script that fetches job postings from Remotive API, filters by keywords, and sends Telegram notifications while logging data in Google Sheets.
+- Tags/Tools: Google Apps Script, JavaScript, Automation, API Integration, Telegram Bot.
+
+5. Self-Hosted n8n Automation Server
+- Description: Self-hosted n8n on Google Cloud VM using Docker, PostgreSQL, and Caddy for remote access. Configured cloud PostgreSQL to securely store credentials and workflows with custom hostname for seamless remote automation management.
+- Tags/Tools: n8n, Docker, PostgreSQL, Caddy, Google Cloud, Self-Hosting.
+
+6. Agent Smith - Personal/Business Assistant
+- Description: Built an AI-powered personal and business assistant with multiple specialized agents using Lovable.dev for the frontend chatbot interface and n8n for backend automation via webhooks. Features include content creation, calendar management, appointments, contact research, and CEO lead scraping.
+- Tags/Tools: AI Agent, Lovable.dev, n8n, Webhook, Automation, Chatbot.

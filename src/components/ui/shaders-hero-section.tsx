@@ -32,6 +32,7 @@ export function ShaderBackground({ children }: ShaderBackgroundProps) {
     >
       {/* Background Shaders */}
       <MeshGradient
+        key={`${theme}-primary`}
         className="absolute inset-0 w-full h-full transition-opacity duration-1000"
         colors={gradientColors}
         performance={isMobile ? "low" : "high"}
@@ -41,6 +42,7 @@ export function ShaderBackground({ children }: ShaderBackgroundProps) {
       {/* Only render overlay gradient on desktop for performance */}
       {!isMobile && (
         <MeshGradient
+          key={`${theme}-overlay`}
           className="absolute inset-0 w-full h-full opacity-60 transition-opacity duration-1000"
           colors={gradientOverlayColors}
           speed={0.2}

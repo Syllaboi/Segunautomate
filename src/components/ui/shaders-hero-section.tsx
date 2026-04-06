@@ -28,7 +28,6 @@ export function ShaderBackground({ children }: ShaderBackgroundProps) {
     <div 
       ref={containerRef} 
       className="min-h-screen w-full relative transition-colors duration-500 bg-[var(--color-bg)]"
-      style={{ willChange: 'transform' }}
     >
       {/* Background Shaders */}
       <MeshGradient

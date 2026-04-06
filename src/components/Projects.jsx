@@ -23,7 +23,8 @@ const Projects = () => {
             title: p.title || 'Untitled',
             description: cleanDesc,
             link: p.link || null,
-            image: imageUrl
+            image: imageUrl,
+            tags: p.tags || []
         };
     });
 

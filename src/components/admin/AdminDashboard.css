@@ -1,16 +1,17 @@
 .admin-dashboard {
     min-height: 100vh;
-    background-color: var(--color-background);
+    background-color: var(--color-bg);
 }
 
 .admin-header {
-    background-color: var(--color-surface);
+    background-color: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--color-border);
     padding: var(--spacing-lg) 0;
     position: sticky;
     top: 0;
-    z-index: var(--z-sticky);
-    box-shadow: var(--shadow-sm);
+    z-index: 100;
 }
 
 .admin-header-content {
@@ -24,6 +25,8 @@
 .admin-header h1 {
     margin: 0;
     font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--color-text-h);
 }
 
 .admin-header-actions {
@@ -33,6 +36,8 @@
 
 .admin-content {
     padding: var(--spacing-xl) var(--spacing-md);
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 /* Tabs */
@@ -53,23 +58,23 @@
     background: transparent;
     border: none;
     border-bottom: 2px solid transparent;
-    color: var(--color-text-secondary);
-    font-weight: 500;
+    color: var(--color-text-muted);
+    font-weight: 600;
+    font-size: 0.95rem;
     cursor: pointer;
-    transition: all var(--transition-fast);
+    transition: all 0.3s ease;
     white-space: nowrap;
     flex-shrink: 0;
     margin-bottom: -5px;
 }
 
 .admin-tab:hover {
-    color: var(--color-primary);
-    background-color: var(--color-surface);
+    color: var(--color-text-body);
 }
 
 .admin-tab.active {
-    color: var(--color-primary);
-    border-bottom-color: var(--color-primary);
+    color: var(--color-text-h);
+    border-bottom-color: var(--color-accent);
 }
 
 .admin-tab-content {
@@ -88,132 +93,180 @@
 .admin-actions h2 {
     margin: 0;
     font-size: 1.5rem;
-    font-weight: 600;
-    letter-spacing: -0.02em;
+    font-weight: 700;
+    color: var(--color-text-h);
 }
 
 .no-projects-admin {
     text-align: center;
     padding: var(--spacing-3xl);
-    color: var(--color-text-secondary);
+    color: var(--color-text-muted);
 }
 
-.admin-projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: var(--spacing-lg);
-}
-
-.admin-project-card {
+/* ── Premium Wide-Card Layout ── */
+.admin-projects-list-premium {
     display: flex;
     flex-direction: column;
-    padding: var(--spacing-lg, 24px);
-    border-radius: var(--radius-xl, 16px);
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    gap: 20px;
 }
 
-.admin-project-card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
+.admin-card-premium {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 24px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05); /* very soft ambient border */
+    border-radius: 24px;
+    gap: 24px;
+    height: 100%;
 }
 
-.admin-project-image {
-    width: 100%;
-    height: 200px;
+.admin-card-premium__thumb {
+    width: 130px;
+    height: 90px;
+    border-radius: 14px;
     overflow: hidden;
-    background-color: var(--color-background);
-    margin: calc(var(--spacing-lg) * -1);
-    margin-bottom: var(--spacing-md);
-    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    flex-shrink: 0;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.08); /* inner neat border */
+    box-shadow: inset 0 2px 12px rgba(0,0,0,0.5);
 }
 
-.admin-project-image img {
+.admin-card-premium__thumb img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.5s ease;
 }
 
-.admin-project-content {
+.admin-card-premium:hover .admin-card-premium__thumb img {
+    transform: scale(1.05);
+}
+
+.admin-card-premium__placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.admin-card-premium__body {
     flex: 1;
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
+    min-width: 0;
 }
 
-.admin-project-content h3 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    line-height: 1.4;
+.admin-card-premium__title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-text-h);
     margin-bottom: 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     letter-spacing: -0.01em;
 }
 
-.admin-project-content>p {
-    flex: 1;
-    font-size: 0.85rem;
-    line-height: 1.6;
+.admin-card-premium__desc {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--color-text-body);
     margin-bottom: 1rem;
-    color: var(--color-text-secondary);
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
-.admin-project-tags {
+/* Beautiful Pill Tags */
+.admin-card-premium__tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: var(--spacing-md);
+    gap: 8px;
 }
 
-.admin-project-tags .tag {
+.admin-premium-tag {
     padding: 0.25rem 0.75rem;
-    background-color: var(--color-background);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-full);
-    font-size: 0.875rem;
-    color: var(--color-text-secondary);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 100px; /* perfectly round pills */
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
 }
 
-.admin-project-actions {
+/* Premium Action Buttons */
+.admin-card-premium__actions {
     display: flex;
-    gap: var(--spacing-sm);
-    margin-top: auto;
+    flex-direction: column;
+    gap: 12px;
+    flex-shrink: 0;
+    justify-content: flex-start;
 }
 
-.admin-project-actions .btn {
-    flex: 1;
+.admin-btn-premium {
+    display: flex;
+    align-items: center;
     justify-content: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    min-width: 100px;
 }
 
+.admin-btn-premium.edit {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--color-text-h);
+}
+
+.admin-btn-premium.edit:hover {
+    background: var(--color-text-h);
+    color: var(--color-bg);
+}
+
+.admin-btn-premium.delete {
+    background: transparent;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: rgba(239, 68, 68, 0.8);
+}
+
+.admin-btn-premium.delete:hover {
+    background: rgba(239, 68, 68, 0.15);
+    color: rgb(239, 68, 68);
+    border-color: rgb(239, 68, 68);
+}
+
+/* Mobile Responsive */
 @media (max-width: 768px) {
-    .admin-projects-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .admin-header-content {
+    .admin-card-premium {
         flex-direction: column;
-        align-items: flex-start;
+        padding: 20px;
     }
-
-    .admin-header-actions {
+    
+    .admin-card-premium__thumb {
         width: 100%;
+        height: 180px;
     }
-
-    .admin-header-actions .btn {
+    
+    .admin-card-premium__actions {
+        width: 100%;
+        flex-direction: row;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        padding-top: 20px;
+        margin-top: 10px;
+    }
+    
+    .admin-btn-premium {
         flex: 1;
-    }
-
-    .admin-tabs {
-        gap: 0;
-    }
-
-    .admin-tab {
-        flex: 1;
-        justify-content: center;
-        padding: var(--spacing-sm) var(--spacing-md);
-        font-size: 0.875rem;
     }
 }

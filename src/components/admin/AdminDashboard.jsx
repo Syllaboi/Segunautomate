@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useProjects } from '../../context/ProjectsContext';
 import { useContent } from '../../context/ContentContext';
 import { useAuth } from '../../context/AuthContext';
-import { Plus, Edit, Trash2, LogOut, Home, User, Briefcase, Code, Mail, FolderOpen } from 'lucide-react';
+import { Plus, Edit, Trash2, LogOut, Home, User, Briefcase, Code, Mail, FolderOpen, Image as ImageIcon } from 'lucide-react';
 import { GlowCard } from '../ui/spotlight-card';
 import ProjectForm from './ProjectForm';
 import AboutEditor from './AboutEditor';
@@ -103,47 +103,56 @@ const AdminDashboard = () => {
                                         <p>No projects yet. Click "Add New Project" to create your first one!</p>
                                     </div>
                                 ) : (
-                                    <div className="admin-projects-grid">
-                                        {projects.map((project) => (
-                                            <GlowCard key={project.id} customSize={true} glowColor="blue">
-                                                <div className="admin-project-card" style={{ background: 'transparent', border: 'none', height: '100%' }}>
-                                                    {project.image && (
-                                                        <div className="admin-project-image">
-                                                            <img src={project.image} alt={project.title} />
+                                        <div className="admin-projects-list-premium">
+                                            {projects.map((project) => (
+                                                <GlowCard key={project.id} customSize={true} glowColor="orange">
+                                                    <div className="admin-card-premium">
+                                                        {/* Thumbnail Box */}
+                                                        <div className="admin-card-premium__thumb">
+                                                            {project.image ? (
+                                                                <img src={project.image} alt={project.title} />
+                                                            ) : (
+                                                                <div className="admin-card-premium__placeholder">
+                                                                    <ImageIcon size={28} />
+                                                                </div>
+                                                            )}
                                                         </div>
-                                                    )}
-                                                    <div className="admin-project-content">
-                                                        <h3>{project.title}</h3>
-                                                        <p>{project.description}</p>
-                                                        {project.tags && project.tags.length > 0 && (
-                                                            <div className="admin-project-tags">
-                                                                {project.tags.map((tag, idx) => (
-                                                                    <span key={idx} className="tag">{tag}</span>
-                                                                ))}
-                                                            </div>
-                                                        )}
-                                                        <div className="admin-project-actions">
+
+                                                        {/* Content Body */}
+                                                        <div className="admin-card-premium__body">
+                                                            <h3 className="admin-card-premium__title">{project.title}</h3>
+                                                            <p className="admin-card-premium__desc">{project.description}</p>
+                                                            
+                                                            {project.tags && project.tags.length > 0 && (
+                                                                <div className="admin-card-premium__tags">
+                                                                    {project.tags.map((tag, idx) => (
+                                                                        <span key={idx} className="admin-premium-tag">{tag}</span>
+                                                                    ))}
+                                                                </div>
+                                                            )}
+                                                        </div>
+
+                                                        {/* Actions Sidebar */}
+                                                        <div className="admin-card-premium__actions">
                                                             <button
                                                                 onClick={() => handleEdit(project)}
-                                                                className="btn btn-secondary"
+                                                                className="admin-btn-premium edit"
                                                             >
                                                                 <Edit size={16} />
-                                                                Edit
+                                                                <span>Edit</span>
                                                             </button>
                                                             <button
                                                                 onClick={() => handleDelete(project.id)}
-                                                                className="btn btn-ghost"
-                                                                style={{ color: 'var(--color-error)' }}
+                                                                className="admin-btn-premium delete"
                                                             >
                                                                 <Trash2 size={16} />
-                                                                Delete
+                                                                <span>Delete</span>
                                                             </button>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </GlowCard>
-                                        ))}
-                                    </div>
+                                                </GlowCard>
+                                            ))}
+                                        </div>
                                 )}
                             </>
                         )

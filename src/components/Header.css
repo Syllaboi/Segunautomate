@@ -12,7 +12,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
+    /* overflow: hidden removed — it breaks position:fixed children on iOS/Safari */
     background: #020205;
 }
 
@@ -21,16 +21,15 @@
     position: absolute;
     inset: 0;
     z-index: 0;
-    overflow: hidden;
+    overflow: hidden; /* Clip blobs here, not on parent */
 }
 
 /* Primary animated blob */
 .shader-blob {
     position: absolute;
     border-radius: 50%;
-    filter: blur(100px);
+    filter: blur(65px);
     animation: blobFloat 8s ease-in-out infinite;
-    will-change: transform;
 }
 .shader-blob-1 {
     width: 700px;
@@ -94,21 +93,22 @@
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1000;
+    z-index: 9999; /* Must beat any stacking context from other sections */
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 var(--sp-8);
     height: 64px;
-    background: rgba(2, 2, 5, 0.6);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    transition: background var(--ease-base), border-color var(--ease-base);
+    background: rgba(2, 2, 5, 0.4);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    transition: background var(--ease-base), border-color var(--ease-base), box-shadow var(--ease-base);
 }
 .header-nav.scrolled {
-    background: rgba(2, 2, 5, 0.92);
+    background: rgba(2, 2, 5, 0.88);
     border-bottom-color: rgba(255,255,255,0.1);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
 }
 
 .nav-logo {

@@ -47,7 +47,7 @@ export default function MainHero() {
   }
 
   const stats = [
-    { value: '50', suffix: '+', label: 'Projects Delivered' },
+    { value: '20', suffix: '+', label: 'Projects Delivered' },
     { value: '3',  suffix: 'yrs', label: 'Experience' },
     { value: '100', suffix: '%', label: 'Remote Ready' },
   ]

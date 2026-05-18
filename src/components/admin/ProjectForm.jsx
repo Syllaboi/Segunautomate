@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useProjects } from '../../context/ProjectsContext';
 import { X, Upload, Eye, Trash2 } from 'lucide-react';
 import { uploadToCloudinary } from '../../utils/cloudinary';
+import ReactQuill from 'react-quill-new';
+import 'react-quill-new/dist/quill.snow.css';
 import './ProjectForm.css';
 
 const ProjectForm = ({ project, onClose }) => {
@@ -12,7 +14,8 @@ const ProjectForm = ({ project, onClose }) => {
         images: [],
         link: '',
         videoLink: '',
-        tags: ''
+        tags: '',
+        featured: true
     });
     const [imageUrl, setImageUrl] = useState('');
     const [isUploading, setIsUploading] = useState(false);
@@ -26,7 +29,8 @@ const ProjectForm = ({ project, onClose }) => {
                 images: project.images || (project.image ? [project.image] : []),
                 link: project.link || '',
                 videoLink: project.videoLink || '',
-                tags: project.tags ? project.tags.join(', ') : ''
+                tags: project.tags ? project.tags.join(', ') : '',
+                featured: project.featured !== false
             });
         }
     }, [project]);
@@ -34,6 +38,15 @@ const ProjectForm = ({ project, onClose }) => {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleCheckboxChange = (e) => {
+        const { name, checked } = e.target;
+        setFormData(prev => ({ ...prev, [name]: checked }));
+    };
+
+    const handleDescriptionChange = (value) => {
+        setFormData(prev => ({ ...prev, description: value }));
     };
 
     const handleKeyDown = (e) => {
@@ -106,7 +119,8 @@ const ProjectForm = ({ project, onClose }) => {
             image: formData.images[0] || '', // Keep backward compatibility
             link: formData.link,
             videoLink: formData.videoLink,
-            tags: formData.tags.split(',').map(tag => tag.trim()).filter(tag => tag)
+            tags: formData.tags.split(',').map(tag => tag.trim()).filter(tag => tag),
+            featured: formData.featured
         };
 
         if (project) {
@@ -118,12 +132,7 @@ const ProjectForm = ({ project, onClose }) => {
         onClose();
     };
 
-    // Function to render description with HTML links
-    const renderDescription = (text) => {
-        if (!text) return '';
-        // Replace <a href="url">text</a> with just the link text for preview
-        return text.replace(/<a\s+href="[^"]*">([^<]+)<\/a>/g, '$1');
-    };
+    // (renderDescription removed, using dangerouslySetInnerHTML)
 
     return (
         <div className="project-form-container">
@@ -136,6 +145,18 @@ const ProjectForm = ({ project, onClose }) => {
 
             <div className="project-form-layout">
                 <form onSubmit={handleSubmit} className="project-form card">
+                    <div className="form-group" style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <input
+                            type="checkbox"
+                            id="featured"
+                            name="featured"
+                            checked={formData.featured}
+                            onChange={handleCheckboxChange}
+                            style={{ width: 'auto' }}
+                        />
+                        <label htmlFor="featured" style={{ margin: 0, display: 'inline' }}>Show in main "Selected Projects" section (uncheck for "And many more")</label>
+                    </div>
+
                     <div className="form-group">
                         <label htmlFor="title">Project Title *</label>
                         <input
@@ -152,21 +173,15 @@ const ProjectForm = ({ project, onClose }) => {
                     <div className="form-group">
                         <label htmlFor="description">
                             Description *
-                            <small style={{ marginLeft: '0.5rem', fontWeight: 'normal' }}>
-                                (Use &lt;a href="url"&gt;text&lt;/a&gt; for links)
-                            </small>
                         </label>
-                        <textarea
-                            id="description"
-                            name="description"
-                            value={formData.description}
-                            onChange={handleChange}
-                            onKeyDown={handleKeyDown}
-                            required
-                            placeholder="Describe your project... Press Enter for new line. Use <a href='url'>link text</a> for clickable links."
-                            rows="6"
-                        />
-                        <small>Press Enter for new line. HTML links supported: &lt;a href="url"&gt;text&lt;/a&gt;</small>
+                        <div style={{ background: '#fff', color: '#000', borderRadius: '4px', overflow: 'hidden' }}>
+                            <ReactQuill 
+                                theme="snow" 
+                                value={formData.description} 
+                                onChange={handleDescriptionChange} 
+                                placeholder="Describe your project with rich text formatting..."
+                            />
+                        </div>
                     </div>
 
                     <div className="form-group">
@@ -298,7 +313,7 @@ const ProjectForm = ({ project, onClose }) => {
                             </div>
                         )}
                         <h4>{formData.title || 'Project Title'}</h4>
-                        <p>{renderDescription(formData.description) || 'Project description will appear here...'}</p>
+                        <div className="admin-rich-text" dangerouslySetInnerHTML={{ __html: formData.description || '<p>Project description will appear here...</p>' }} />
                         {formData.tags && (
                             <div className="preview-tags">
                                 {formData.tags.split(',').map((tag, idx) => {

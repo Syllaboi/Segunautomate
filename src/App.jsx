@@ -11,6 +11,7 @@ import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Privacy from './components/Privacy';
+import ArchivesPage from './components/ArchivesPage';
 import AdminLogin from './components/admin/AdminLogin';
 import AdminDashboard from './components/admin/AdminDashboard';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -60,6 +61,10 @@ const AppContent = () => {
         <Privacy />
       </>
     );
+  }
+
+  if (route === '/archives') {
+    return <ArchivesPage />;
   }
 
   // Home page (default route)

@@ -19,10 +19,25 @@
 }
 
 .project-form-layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-xl);
-    align-items: start;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+/* Fix ReactQuill editor text color (prevent global white text from overriding it) */
+.ql-editor {
+    color: #000 !important;
+    min-height: 250px; /* Give it plenty of space to edit */
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.ql-editor * {
+    color: #000 !important;
+}
+
+.ql-toolbar {
+    background: #f8f9fa;
 }
 
 .project-form {
@@ -103,8 +118,9 @@
 /* Preview */
 .project-preview {
     padding: var(--spacing-xl);
-    position: sticky;
-    top: calc(var(--spacing-xl) + 80px);
+    position: static;
+    width: 100%;
+    margin-top: 2rem;
 }
 
 .preview-header {
@@ -174,14 +190,6 @@
 }
 
 @media (max-width: 1024px) {
-    .project-form-layout {
-        grid-template-columns: 1fr;
-    }
-
-    .project-preview {
-        position: static;
-    }
-
     .images-container {
         grid-template-columns: repeat(2, 1fr);
     }

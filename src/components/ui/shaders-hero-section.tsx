@@ -5,6 +5,7 @@ import type React from "react"
 import { useRef } from "react"
 import { useTheme } from "../../context/ThemeContext"
 import { useIsMobile } from "../../hooks/useMediaQuery"
+import { useInView } from "framer-motion"
 
 interface ShaderBackgroundProps {
   children: React.ReactNode
@@ -12,6 +13,7 @@ interface ShaderBackgroundProps {
 
 export function ShaderBackground({ children }: ShaderBackgroundProps) {
   const containerRef = useRef<HTMLDivElement>(null)
+  const isInView = useInView(containerRef, { margin: "200px 0px 0px 0px" }) // Keep it rendered slightly out of view
   const { theme } = useTheme()
   const isMobile = useIsMobile()
   const isLight = theme === 'light'
@@ -30,16 +32,18 @@ export function ShaderBackground({ children }: ShaderBackgroundProps) {
       className="min-h-screen w-full relative transition-colors duration-500 bg-[var(--color-bg)]"
     >
       {/* Background Shaders */}
-      <MeshGradient
-        key={`${theme}-primary`}
-        className="absolute inset-0 w-full h-full transition-opacity duration-1000"
-        colors={gradientColors}
-        performance={isMobile ? "low" : "high"}
-        speed={isMobile ? 0.15 : 0.3}
-      />
+      {isInView && (
+        <MeshGradient
+          key={`${theme}-primary`}
+          className="absolute inset-0 w-full h-full transition-opacity duration-1000"
+          colors={gradientColors}
+          performance={isMobile ? "low" : "high"}
+          speed={isMobile ? 0.15 : 0.3}
+        />
+      )}
       
       {/* Only render overlay gradient on desktop for performance */}
-      {!isMobile && (
+      {!isMobile && isInView && (
         <MeshGradient
           key={`${theme}-overlay`}
           className="absolute inset-0 w-full h-full opacity-60 transition-opacity duration-1000"

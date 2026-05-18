@@ -1,14 +1,17 @@
 import { useProjects } from '../context/ProjectsContext';
 import useScrollReveal from '../utils/useScrollReveal';
 import { ProjectShowcase } from './ui/project-showcase';
+import { ArrowRight } from 'lucide-react';
 import './Projects.css';
 
 const Projects = () => {
     const { projects } = useProjects();
     useScrollReveal(0.12, [projects]);
 
+    const featuredProjects = projects.filter(p => p.featured !== false && p.featured !== 'false');
+
     // Map projects to ProjectData expected by ProjectShowcase
-    const showcaseProjects = projects.map(p => {
+    const showcaseProjects = featuredProjects.map(p => {
         let imageUrl = null;
         if (p.image) imageUrl = p.image;
         else if (p.images && p.images.length > 0) imageUrl = p.images[0];
@@ -47,15 +50,31 @@ const Projects = () => {
                     </p>
                 </div>
 
-                {projects.length === 0 ? (
+                {featuredProjects.length === 0 ? (
                     <div className="no-projects">
-                        <p>No projects yet. Check back soon!</p>
+                        <p>No featured projects yet. Check back soon!</p>
                     </div>
                 ) : (
                     <div className="reveal reveal-delay-2 mt-8 w-full">
                         <ProjectShowcase projects={showcaseProjects} />
                     </div>
                 )}
+
+                <div className="reveal reveal-delay-3" style={{ display: 'flex', justifyContent: 'center', marginTop: '4rem' }}>
+                    <a 
+                        href="/archives" 
+                        className="btn btn-secondary" 
+                        style={{ display: 'inline-flex', alignItems: 'center', gap: '0.75rem', padding: '1rem 2rem', fontSize: '1.1rem' }}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            window.history.pushState({}, '', '/archives');
+                            window.dispatchEvent(new Event('popstate'));
+                        }}
+                    >
+                        And Many More Projects
+                        <ArrowRight size={20} />
+                    </a>
+                </div>
             </div>
         </section>
     );

@@ -15,8 +15,6 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    // Firebase Auth handles authentication
-
     // Update last activity timestamp
     const updateActivity = () => {
         if (isAuthenticated) {

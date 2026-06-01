@@ -96,7 +96,6 @@ const defaultContent = {
     ],
     contact: {
         email: 'sgnzoe.life@gmail.com',
-        phone: '+2347034572909',
         location: 'Lagos, Nigeria / Remote Available',
         linkedin: 'https://linkedin.com/in/segunexploresdata/',
         resume: 'https://drive.google.com/file/d/1QYCwepdx5CT2wb8IvZXM7OZkbKpeGaGA/view?usp=sharing'

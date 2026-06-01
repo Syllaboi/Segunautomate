@@ -42,16 +42,6 @@ const ContactEditor = () => {
                 </div>
 
                 <div className="editor-field-group">
-                    <label>Phone Number</label>
-                    <input
-                        type="tel"
-                        value={contactData.phone}
-                        onChange={(e) => handleChange('phone', e.target.value)}
-                        placeholder="+234 xxx xxx xxxx"
-                    />
-                </div>
-
-                <div className="editor-field-group">
                     <label>Location</label>
                     <input
                         type="text"

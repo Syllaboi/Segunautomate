@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useContent } from '../context/ContentContext';
-import { Mail, Phone, MapPin, Send } from 'lucide-react';
+import { Mail, MapPin, Send } from 'lucide-react';
 import useScrollReveal from '../utils/useScrollReveal';
 import './Contact.css';
 
@@ -55,7 +55,6 @@ const Contact = () => {
 
     const details = [
         { icon: <Mail size={20} />, label: 'Email', value: contact.email, href: `mailto:${contact.email}` },
-        { icon: <Phone size={20} />, label: 'Phone', value: contact.phone, href: `tel:${contact.phone}` },
         { icon: <MapPin size={20} />, label: 'Location', value: contact.location, href: null },
     ];
 

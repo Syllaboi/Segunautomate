@@ -128,7 +128,9 @@ export function ProjectShowcase({ projects }: { projects: ProjectData[] }) {
   return (
     <div className="proj-showcase-hoz">
       {projects.map((p, i) => (
-        <ProjectCard key={`${p.title}-${i}`} project={p} index={i} />
+        <div key={`${p.title}-${i}`} className={`reveal reveal-delay-${(i % 5) + 1}`}>
+          <ProjectCard project={p} index={i} />
+        </div>
       ))}
     </div>
   )

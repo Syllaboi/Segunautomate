@@ -55,9 +55,9 @@ export default function MainHero() {
   return (
     <>
       {/* ── Fixed Navigation — rendered OUTSIDE ShaderBackground to avoid stacking context traps ── */}
-      <nav className={`fixed top-0 left-0 right-0 z-[9999] flex items-center justify-between px-6 py-0 h-16 transition-all duration-300 ${scrolled ? 'bg-[var(--color-bg)]/80 backdrop-blur-md border-b border-[var(--color-border)] shadow-lg' : ''}`}>
-        <div className="text-2xl font-bold text-[var(--color-text-h)] cursor-pointer relative overflow-hidden px-1 -mx-1" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-          <span className="relative z-10">SegunAutomate<span className="text-[var(--color-accent)]">.</span></span>
+      <nav className={`fixed top-0 left-0 right-0 z-[9999] flex items-center justify-between px-4 md:px-6 py-0 h-16 transition-all duration-300 ${scrolled ? 'bg-[var(--color-bg)]/80 backdrop-blur-md border-b border-[var(--color-border)] shadow-lg' : ''}`}>
+        <div className="text-lg md:text-2xl font-bold text-[var(--color-text-h)] cursor-pointer relative overflow-hidden px-1 -mx-1 flex-shrink-0 whitespace-nowrap" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+          <span className="relative z-10">SegunAutomate<span className={theme === 'dark' ? 'text-white' : 'text-[var(--color-accent)]'}>.</span></span>
           <div className="absolute inset-0 w-1/3 bg-gradient-to-r from-transparent via-white/50 to-transparent glass-sweep z-20 pointer-events-none" />
         </div>
 
@@ -73,7 +73,7 @@ export default function MainHero() {
           ))}
         </div>
 
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-2 md:space-x-4 flex-shrink-0">
           <button
             onClick={toggleTheme}
             className="p-2 rounded-full hover:bg-[var(--color-border)] text-[var(--color-text-body)] hover:text-[var(--color-text-h)] transition-all"
@@ -83,7 +83,7 @@ export default function MainHero() {
           </button>
           <button
             onClick={() => scrollToSection('contact')}
-            className="px-6 py-2 rounded-full border border-[var(--color-border)] text-[var(--color-text-h)] text-xs font-semibold hover:bg-[var(--color-text-h)] hover:text-[var(--color-bg)] transition-all mt-0"
+            className="px-4 py-1.5 md:px-6 md:py-2 rounded-full border border-[var(--color-border)] text-[var(--color-text-h)] text-xs font-semibold hover:bg-[var(--color-text-h)] hover:text-[var(--color-bg)] transition-all mt-0 whitespace-nowrap"
           >
             Hire Me
           </button>

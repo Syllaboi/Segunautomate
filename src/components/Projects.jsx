@@ -55,7 +55,7 @@ const Projects = () => {
                         <p>No featured projects yet. Check back soon!</p>
                     </div>
                 ) : (
-                    <div className="reveal reveal-delay-2 mt-8 w-full">
+                    <div className="mt-8 w-full">
                         <ProjectShowcase projects={showcaseProjects} />
                     </div>
                 )}
